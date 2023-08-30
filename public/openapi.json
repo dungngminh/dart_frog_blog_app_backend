@@ -31,12 +31,12 @@
       "description": "Operations about blogs"
     },
     {
-      "name": "register",
-      "description": "Operations about register"
-    },
-    {
       "name": "login",
       "description": "Operations about login"
+    },
+    {
+      "name": "register",
+      "description": "Operations about register"
     }
   ],
   "components": {
@@ -48,6 +48,23 @@
             "type": "string"
           },
           "password": {
+            "type": "string"
+          }
+        }
+      },
+      "register": {
+        "type": "object",
+        "properties": {
+          "full_name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "confirmation_password": {
             "type": "string"
           }
         }
@@ -139,33 +156,6 @@
         "security": []
       }
     },
-    "/api/auth/register": {
-      "post": {
-        "tags": [
-          "register"
-        ],
-        "requestBody": {
-          "description": "",
-          "required": false,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Created register.",
-            "headers": {},
-            "content": {}
-          }
-        },
-        "parameters": [],
-        "security": []
-      }
-    },
     "/api/auth/login": {
       "post": {
         "tags": [
@@ -185,6 +175,33 @@
         "responses": {
           "201": {
             "description": "Created login.",
+            "headers": {},
+            "content": {}
+          }
+        },
+        "parameters": [],
+        "security": []
+      }
+    },
+    "/api/auth/register": {
+      "post": {
+        "tags": [
+          "register"
+        ],
+        "requestBody": {
+          "description": "",
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/register"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created register.",
             "headers": {},
             "content": {}
           }

@@ -1,4 +1,0 @@
-abstract class BlogDatasource{
-
-  // Future<>
-} 

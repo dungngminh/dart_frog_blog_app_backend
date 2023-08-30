@@ -1,31 +1,24 @@
-import 'package:equatable/equatable.dart';
+import 'package:stormberry/stormberry.dart';
+import 'package:very_good_blog_app_backend/models/blog.dart';
 
-class User extends Equatable {
-  const User({
-    required this.id,
-    required this.fullName,
-    required this.email,
-    required this.avatarUrl,
-    required this.following,
-    required this.follower,
-  });
+part 'user.schema.dart';
 
-  final String id;
-  final String fullName;
-  final String email;
-  final String avatarUrl;
-  final int following;
-  final int follower;
+@Model()
+abstract class User {
+  @PrimaryKey()
+  String get id;
 
-  @override
-  List<Object?> get props {
-    return [
-      id,
-      fullName,
-      email,
-      avatarUrl,
-      following,
-      follower,
-    ];
-  }
+  String get fullName;
+
+  String get email;
+
+  String get password;
+
+  String? get avatarUrl;
+
+  int get following => 0;
+
+  int get follower => 0;
+  @BindTo(#creator)
+  List<Blog> get blogs;
 }

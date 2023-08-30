@@ -1,10 +1,18 @@
-import 'package:dart_frog/dart_frog.dart';
-import 'package:mongo_dart/mongo_dart.dart';
+import 'dart:io';
 
-Future<Handler> middleware(Handler handler) async {
-  final db = Db('mongodb://127.0.0.1:27017/blog_app');
-  await db.open();
+import 'package:dart_frog/dart_frog.dart';
+import 'package:stormberry/stormberry.dart';
+
+final db = Database(
+  host: '127.0.0.1',
+  port: 5432,
+  database: Platform.environment['DB_NAME'],
+  user: Platform.environment['DB_USER'],
+  password: Platform.environment['DB_PASSWORD'],
+  useSSL: false,
+);
+    
+Handler middleware(Handler handler) {
   return handler
-    ..use(requestLogger())
-    ..use(provider<Db>((_) => db));
+      .use(requestLogger()).use(provider<Database>((_) => db));
 }

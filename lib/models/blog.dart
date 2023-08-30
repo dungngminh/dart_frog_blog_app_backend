@@ -1,35 +1,24 @@
-import 'package:equatable/equatable.dart';
+import 'package:stormberry/stormberry.dart';
 import 'package:very_good_blog_app_backend/models/blog_category.dart';
 import 'package:very_good_blog_app_backend/models/user.dart';
 
-class Blog extends Equatable {
-  const Blog({
-    required this.id,
-    required this.title,
-    required this.description,
-    required this.category,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.creator,
-  });
+part 'blog.schema.dart';
 
-  final String id;
-  final String title;
-  final String description;
-  final BlogCategory category;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-  final User creator;
+@Model()
+abstract class Blog {
+  @PrimaryKey()
+  String get id;
 
-  @override
-  List<Object?> get props {
-    return [
-      id,
-      title,
-      description,
-      category,
-      createdAt,
-      updatedAt,
-    ];
-  }
+  String get title;
+
+  String get description;
+
+  @UseConverter(EnumTypeConverter<BlogCategory>(BlogCategory.values))
+  BlogCategory get category;
+
+  DateTime get createdAt;
+
+  DateTime get updatedAt;
+  @BindTo(#blogs)
+  User get creator;
 }

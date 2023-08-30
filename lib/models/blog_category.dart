@@ -1,4 +1,4 @@
-enum BlogCategory {
+enum BlogCategory implements Enum {
   business,
   technology,
   fashion,
