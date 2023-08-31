@@ -16,9 +16,9 @@ abstract class User {
 
   String? get avatarUrl;
 
-  int get following => 0;
+  int get following;
 
-  int get follower => 0;
+  int get follower;
   @BindTo(#creator)
   List<Blog> get blogs;
 }

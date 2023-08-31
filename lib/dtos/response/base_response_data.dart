@@ -85,6 +85,14 @@ class NotFoundResponse extends Response {
         );
 }
 
+class ConflictResponse extends Response {
+  ConflictResponse([String? message])
+      : super.json(
+          statusCode: HttpStatus.conflict,
+          body: BaseResponseData.failed(message).toJson(),
+        );
+}
+
 class UnauthorizedResponse extends Response {
   UnauthorizedResponse([String? message])
       : super.json(
@@ -96,7 +104,7 @@ class UnauthorizedResponse extends Response {
 class BadRequestResponse extends Response {
   BadRequestResponse([String? message])
       : super.json(
-          statusCode: 400,
+          statusCode: HttpStatus.badRequest,
           body: BaseResponseData.failed(message).toJson(),
         );
 }

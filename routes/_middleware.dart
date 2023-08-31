@@ -4,8 +4,8 @@ import 'package:dart_frog/dart_frog.dart';
 import 'package:stormberry/stormberry.dart';
 
 final db = Database(
-  host: '127.0.0.1',
-  port: 5432,
+  host: Platform.environment['DB_HOST'],
+  port: int.tryParse(Platform.environment['DB_POST'] ?? '') ?? 5432,
   database: Platform.environment['DB_NAME'],
   user: Platform.environment['DB_USER'],
   password: Platform.environment['DB_PASSWORD'],

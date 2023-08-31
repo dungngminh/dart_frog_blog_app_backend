@@ -10,6 +10,8 @@ import 'package:very_good_blog_app_backend/dtos/request/auth/register_request.da
 import 'package:very_good_blog_app_backend/dtos/response/base_response_data.dart';
 import 'package:very_good_blog_app_backend/models/user.dart';
 
+
+
 /// @Allow(POST)
 FutureOr<Response> onRequest(RequestContext context) async {
   return switch (context.request.method) {
@@ -34,6 +36,16 @@ Future<Response> _onRegisterRequest(RequestContext context) async {
 
   if (!isEmail(request.email)) {
     return BadRequestResponse('Email format is wrong, please check again');
+  }
+
+  final result = await db.query(
+    'SELECT * FROM users WHERE email=@email',
+    {
+      'email': request.email,
+    },
+  );
+  if (result.affectedRowCount > 0) {
+    return ConflictResponse('This email was registered');
   }
 
   try {

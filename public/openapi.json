@@ -31,27 +31,16 @@
       "description": "Operations about blogs"
     },
     {
-      "name": "login",
-      "description": "Operations about login"
-    },
-    {
       "name": "register",
       "description": "Operations about register"
+    },
+    {
+      "name": "login",
+      "description": "Operations about login"
     }
   ],
   "components": {
     "schemas": {
-      "login": {
-        "type": "object",
-        "properties": {
-          "email": {
-            "type": "string"
-          },
-          "password": {
-            "type": "string"
-          }
-        }
-      },
       "register": {
         "type": "object",
         "properties": {
@@ -65,6 +54,17 @@
             "type": "string"
           },
           "confirmation_password": {
+            "type": "string"
+          }
+        }
+      },
+      "login": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
             "type": "string"
           }
         }
@@ -156,33 +156,6 @@
         "security": []
       }
     },
-    "/api/auth/login": {
-      "post": {
-        "tags": [
-          "login"
-        ],
-        "requestBody": {
-          "description": "",
-          "required": false,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/login"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Created login.",
-            "headers": {},
-            "content": {}
-          }
-        },
-        "parameters": [],
-        "security": []
-      }
-    },
     "/api/auth/register": {
       "post": {
         "tags": [
@@ -202,6 +175,33 @@
         "responses": {
           "201": {
             "description": "Created register.",
+            "headers": {},
+            "content": {}
+          }
+        },
+        "parameters": [],
+        "security": []
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "tags": [
+          "login"
+        ],
+        "requestBody": {
+          "description": "",
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/login"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created login.",
             "headers": {},
             "content": {}
           }
