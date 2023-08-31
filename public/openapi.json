@@ -53,7 +53,7 @@
           "category": {
             "type": "string"
           },
-          "imageUrl": {
+          "image_url": {
             "type": "string"
           }
         }
@@ -92,19 +92,53 @@
   "paths": {
     "/api/blogs": {
       "get": {
-        "tags": ["blogs"],
+        "tags": [
+          "blogs"
+        ],
         "responses": {
           "200": {
             "description": "A list of blogs.",
             "headers": {},
-            "content": {}
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/blogs"
+                  }
+                }
+              }
+            }
           }
         },
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "deprecated": false,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "deprecated": false,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "security": []
       },
       "post": {
-        "tags": ["blogs"],
+        "tags": [
+          "blogs"
+        ],
         "requestBody": {
           "description": "",
           "required": false,
@@ -123,18 +157,47 @@
             "content": {}
           }
         },
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "deprecated": false,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "deprecated": false,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "security": []
       }
     },
     "/api/blogs/{id}": {
       "get": {
-        "tags": ["blogs"],
+        "tags": [
+          "blogs"
+        ],
         "responses": {
           "200": {
             "description": "A blogs.",
             "headers": {},
-            "content": {}
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/blogs"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -152,7 +215,9 @@
         "security": []
       },
       "delete": {
-        "tags": ["blogs"],
+        "tags": [
+          "blogs"
+        ],
         "responses": {
           "204": {
             "description": "Deleted",
@@ -175,17 +240,31 @@
         "security": []
       },
       "patch": {
-        "tags": ["blogs"],
+        "tags": [
+          "blogs"
+        ],
         "requestBody": {
           "description": "",
           "required": false,
-          "content": {}
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/blogs"
+              }
+            }
+          }
         },
         "responses": {
           "200": {
             "description": "A list of blogs.",
             "headers": {},
-            "content": {}
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/blogs"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -205,7 +284,9 @@
     },
     "/api/auth/register": {
       "post": {
-        "tags": ["register"],
+        "tags": [
+          "register"
+        ],
         "requestBody": {
           "description": "",
           "required": false,
@@ -230,7 +311,9 @@
     },
     "/api/auth/login": {
       "post": {
-        "tags": ["login"],
+        "tags": [
+          "login"
+        ],
         "requestBody": {
           "description": "",
           "required": false,

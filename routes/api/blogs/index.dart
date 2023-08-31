@@ -5,11 +5,15 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:stormberry/stormberry.dart';
 import 'package:uuid/uuid.dart';
 import 'package:very_good_blog_app_backend/dtos/request/blogs/create_blog_request.dart';
+import 'package:very_good_blog_app_backend/dtos/response/base_pagination_response.dart';
 import 'package:very_good_blog_app_backend/dtos/response/base_response_data.dart';
+import 'package:very_good_blog_app_backend/dtos/response/blogs/get_blogs_response.dart';
 import 'package:very_good_blog_app_backend/models/blog.dart';
 import 'package:very_good_blog_app_backend/models/user.dart';
 
 /// @Allow(GET, POST)
+/// @Query(limit)
+/// @Query(page)
 Future<Response> onRequest(RequestContext context) {
   return switch (context.request.method) {
     HttpMethod.get => _onBlogsGetRequest(context),
@@ -19,7 +23,33 @@ Future<Response> onRequest(RequestContext context) {
 }
 
 Future<Response> _onBlogsGetRequest(RequestContext context) async {
-  return OkResponse();
+  final db = context.read<Database>();
+  final queryParams = context.request.uri.queryParameters;
+  final limit = int.tryParse(queryParams['limit'] ?? '') ?? 20;
+  final currentPage = int.tryParse(queryParams['page'] ?? '') ?? 1;
+
+  try {
+    final results = await db.blogs.queryBlogs(
+      QueryParams(
+        limit: limit,
+        offset: (currentPage - 1) * limit,
+      ),
+    );
+    final blogs = results.map(GetBlogsResponse.fromView);
+    final pagination = BasePaginationResponse(
+      currentPage: currentPage,
+      limit: limit,
+      totalCount: blogs.length,
+    );
+    return OkResponse(
+      {
+        'blogs': blogs.map((e) => e.toJson()).toList(),
+        'pagination': pagination.toJson(),
+      },
+    );
+  } catch (e) {
+    return ServerErrorResponse();
+  }
 }
 
 Future<Response> _onBlogsPostRequest(RequestContext context) async {
