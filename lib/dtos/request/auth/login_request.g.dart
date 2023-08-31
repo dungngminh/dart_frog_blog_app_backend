@@ -6,7 +6,15 @@ part of 'login_request.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-LoginRequest _$LoginRequestFromJson(Map<String, dynamic> json) => LoginRequest(
-      email: json['email'] as String,
-      password: json['password'] as String,
+LoginRequest _$LoginRequestFromJson(Map<String, dynamic> json) =>
+    $checkedCreate(
+      'LoginRequest',
+      json,
+      ($checkedConvert) {
+        final val = LoginRequest(
+          email: $checkedConvert('email', (v) => v as String),
+          password: $checkedConvert('password', (v) => v as String),
+        );
+        return val;
+      },
     );

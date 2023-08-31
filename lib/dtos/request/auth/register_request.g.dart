@@ -7,9 +7,21 @@ part of 'register_request.dart';
 // **************************************************************************
 
 RegisterRequest _$RegisterRequestFromJson(Map<String, dynamic> json) =>
-    RegisterRequest(
-      email: json['email'] as String,
-      password: json['password'] as String,
-      fullName: json['full_name'] as String,
-      confirmationPassword: json['confirmation_password'] as String,
+    $checkedCreate(
+      'RegisterRequest',
+      json,
+      ($checkedConvert) {
+        final val = RegisterRequest(
+          email: $checkedConvert('email', (v) => v as String),
+          password: $checkedConvert('password', (v) => v as String),
+          fullName: $checkedConvert('full_name', (v) => v as String),
+          confirmationPassword:
+              $checkedConvert('confirmation_password', (v) => v as String),
+        );
+        return val;
+      },
+      fieldKeyMap: const {
+        'fullName': 'full_name',
+        'confirmationPassword': 'confirmation_password'
+      },
     );

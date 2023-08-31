@@ -41,6 +41,23 @@
   ],
   "components": {
     "schemas": {
+      "blogs": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "imageUrl": {
+            "type": "string"
+          }
+        }
+      },
       "register": {
         "type": "object",
         "properties": {
@@ -75,39 +92,26 @@
   "paths": {
     "/api/blogs": {
       "get": {
-        "tags": [
-          "blogs"
-        ],
+        "tags": ["blogs"],
         "responses": {
           "200": {
             "description": "A list of blogs.",
             "headers": {},
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object"
-                  }
-                }
-              }
-            }
+            "content": {}
           }
         },
         "parameters": [],
         "security": []
       },
       "post": {
-        "tags": [
-          "blogs"
-        ],
+        "tags": ["blogs"],
         "requestBody": {
           "description": "",
           "required": false,
           "content": {
             "application/json": {
               "schema": {
-                "type": "object"
+                "$ref": "#/components/schemas/blogs"
               }
             }
           }
@@ -125,20 +129,63 @@
     },
     "/api/blogs/{id}": {
       "get": {
-        "tags": [
-          "blogs"
-        ],
+        "tags": ["blogs"],
         "responses": {
           "200": {
             "description": "A blogs.",
             "headers": {},
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object"
-                }
-              }
+            "content": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "deprecated": false,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string"
             }
+          }
+        ],
+        "security": []
+      },
+      "delete": {
+        "tags": ["blogs"],
+        "responses": {
+          "204": {
+            "description": "Deleted",
+            "headers": {},
+            "content": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "deprecated": false,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": []
+      },
+      "patch": {
+        "tags": ["blogs"],
+        "requestBody": {
+          "description": "",
+          "required": false,
+          "content": {}
+        },
+        "responses": {
+          "200": {
+            "description": "A list of blogs.",
+            "headers": {},
+            "content": {}
           }
         },
         "parameters": [
@@ -158,9 +205,7 @@
     },
     "/api/auth/register": {
       "post": {
-        "tags": [
-          "register"
-        ],
+        "tags": ["register"],
         "requestBody": {
           "description": "",
           "required": false,
@@ -185,9 +230,7 @@
     },
     "/api/auth/login": {
       "post": {
-        "tags": [
-          "login"
-        ],
+        "tags": ["login"],
         "requestBody": {
           "description": "",
           "required": false,

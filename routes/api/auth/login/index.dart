@@ -9,17 +9,18 @@ import 'package:very_good_blog_app_backend/common/jwt_extension.dart';
 import 'package:very_good_blog_app_backend/dtos/request/auth/login_request.dart';
 import 'package:very_good_blog_app_backend/dtos/response/auth/login_response.dart';
 import 'package:very_good_blog_app_backend/dtos/response/base_response_data.dart';
+import 'package:very_good_blog_app_backend/models/user.dart';
 
 
 /// @Allow(POST)
 FutureOr<Response> onRequest(RequestContext context) async {
   return switch (context.request.method) {
-    HttpMethod.post => _onLoginRequest(context),
+    HttpMethod.post => _onLoginPostRequest(context),
     _ => Future.value(MethodNotAllowedResponse()),
   };
 }
 
-Future<Response> _onLoginRequest(RequestContext context) async {
+Future<Response> _onLoginPostRequest(RequestContext context) async {
   final db = context.read<Database>();
 
   final body = await context.request.body();
@@ -32,15 +33,19 @@ Future<Response> _onLoginRequest(RequestContext context) async {
     return BadRequestResponse('Email format is wrong, please check again');
   }
   try {
-    final results = await db.query(
-      'SELECT * FROM users WHERE email=@email AND password=@password',
-      {'email': request.email, 'password': request.password.hashValue},
+    final users = await db.users.queryUsers(
+      QueryParams(
+        where: 'email=@email AND password=@password',
+        values: {
+          'email': request.email,
+          'password': request.password.hashValue
+        },
+      ),
     );
-    final result = results.firstOrNull;
-    if (result == null) return NotFoundResponse('User is not registered');
-    final response = LoginResponse.fromJson(result.toColumnMap());
+    final user = users.firstOrNull;
+    if (user == null) return NotFoundResponse('User is not registered');
     return OkResponse(
-      {...response.toJson(), 'token': createToken(response.id)},
+      LoginResponse(id: user.id, token: createToken(user.id)).toJson(),
     );
   } catch (e) {
     return ServerErrorResponse();

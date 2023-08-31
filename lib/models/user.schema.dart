@@ -110,15 +110,8 @@ class UserViewQueryable extends KeyedViewQueryable<UserView, String> {
   String encodeKey(String key) => TextEncoder.i.encode(key);
 
   @override
-  String get query => 'SELECT "users".*, "blogs"."data" as "blogs"'
-      'FROM "users"'
-      'LEFT JOIN ('
-      '  SELECT "blogs"."creator_id",'
-      '    to_jsonb(array_agg("blogs".*)) as data'
-      '  FROM (${BlogViewQueryable().query}) "blogs"'
-      '  GROUP BY "blogs"."creator_id"'
-      ') "blogs"'
-      'ON "users"."id" = "blogs"."creator_id"';
+  String get query => 'SELECT "users".*'
+      'FROM "users"';
 
   @override
   String get tableAlias => 'users';
@@ -131,8 +124,7 @@ class UserViewQueryable extends KeyedViewQueryable<UserView, String> {
       password: map.get('password'),
       avatarUrl: map.getOpt('avatar_url'),
       following: map.get('following'),
-      follower: map.get('follower'),
-      blogs: map.getListOpt('blogs', BlogViewQueryable().decoder) ?? const []);
+      follower: map.get('follower'));
 }
 
 class UserView {
@@ -144,7 +136,6 @@ class UserView {
     this.avatarUrl,
     required this.following,
     required this.follower,
-    required this.blogs,
   });
 
   final String id;
@@ -154,5 +145,4 @@ class UserView {
   final String? avatarUrl;
   final int following;
   final int follower;
-  final List<BlogView> blogs;
 }

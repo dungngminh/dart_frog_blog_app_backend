@@ -15,12 +15,12 @@ import 'package:very_good_blog_app_backend/models/user.dart';
 /// @Allow(POST)
 FutureOr<Response> onRequest(RequestContext context) async {
   return switch (context.request.method) {
-    HttpMethod.post => _onRegisterRequest(context),
+    HttpMethod.post => _onRegisterPostRequest(context),
     _ => Future.value(MethodNotAllowedResponse()),
   };
 }
 
-Future<Response> _onRegisterRequest(RequestContext context) async {
+Future<Response> _onRegisterPostRequest(RequestContext context) async {
   final db = context.read<Database>();
 
   final body = await context.request.body();
@@ -38,13 +38,15 @@ Future<Response> _onRegisterRequest(RequestContext context) async {
     return BadRequestResponse('Email format is wrong, please check again');
   }
 
-  final result = await db.query(
-    'SELECT * FROM users WHERE email=@email',
-    {
+  final users = await db.users.queryUsers(
+    QueryParams(
+      where: 'email=@email',
+      values: {
       'email': request.email,
-    },
+      },
+    ),
   );
-  if (result.affectedRowCount > 0) {
+  if (users.isNotEmpty) {
     return ConflictResponse('This email was registered');
   }
 

@@ -1,5 +1,4 @@
 import 'package:stormberry/stormberry.dart';
-import 'package:very_good_blog_app_backend/models/blog.dart';
 
 part 'user.schema.dart';
 
@@ -19,6 +18,4 @@ abstract class User {
   int get following;
 
   int get follower;
-  @BindTo(#creator)
-  List<Blog> get blogs;
 }

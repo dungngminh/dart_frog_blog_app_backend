@@ -11,7 +11,9 @@ abstract class Blog {
 
   String get title;
 
-  String get description;
+  String get content;
+
+  String get imageUrl;
 
   @UseConverter(EnumTypeConverter<BlogCategory>(BlogCategory.values))
   BlogCategory get category;
@@ -19,6 +21,6 @@ abstract class Blog {
   DateTime get createdAt;
 
   DateTime get updatedAt;
-  @BindTo(#blogs)
+
   User get creator;
 }

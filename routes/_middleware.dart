@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:dart_frog/dart_frog.dart';
 import 'package:stormberry/stormberry.dart';
+import 'package:very_good_blog_app_backend/models/user.dart';
+import 'package:very_good_blog_app_backend/util/jwt_handler.dart';
 
 final db = Database(
   host: Platform.environment['DB_HOST'],
@@ -14,5 +16,7 @@ final db = Database(
     
 Handler middleware(Handler handler) {
   return handler
-      .use(requestLogger()).use(provider<Database>((_) => db));
+      .use(requestLogger()).use(provider<Database>((_) => db)).use(
+        provider<JwtHandler>((_) => JwtHandler(userRepository: db.users)),
+      );
 }

@@ -41,8 +41,8 @@ class _BlogRepository extends BaseRepository
     if (requests.isEmpty) return;
     var values = QueryValues();
     await db.query(
-      'INSERT INTO "blogs" ( "id", "title", "description", "category", "created_at", "updated_at", "creator_id" )\n'
-      'VALUES ${requests.map((r) => '( ${values.add(r.id)}:text, ${values.add(r.title)}:text, ${values.add(r.description)}:text, ${values.add(EnumTypeConverter<BlogCategory>([
+      'INSERT INTO "blogs" ( "id", "title", "content", "image_url", "category", "created_at", "updated_at", "creator_id" )\n'
+      'VALUES ${requests.map((r) => '( ${values.add(r.id)}:text, ${values.add(r.title)}:text, ${values.add(r.content)}:text, ${values.add(r.imageUrl)}:text, ${values.add(EnumTypeConverter<BlogCategory>([
                 BlogCategory.business,
                 BlogCategory.technology,
                 BlogCategory.fashion,
@@ -60,8 +60,8 @@ class _BlogRepository extends BaseRepository
     var values = QueryValues();
     await db.query(
       'UPDATE "blogs"\n'
-      'SET "title" = COALESCE(UPDATED."title", "blogs"."title"), "description" = COALESCE(UPDATED."description", "blogs"."description"), "category" = COALESCE(UPDATED."category", "blogs"."category"), "created_at" = COALESCE(UPDATED."created_at", "blogs"."created_at"), "updated_at" = COALESCE(UPDATED."updated_at", "blogs"."updated_at"), "creator_id" = COALESCE(UPDATED."creator_id", "blogs"."creator_id")\n'
-      'FROM ( VALUES ${requests.map((r) => '( ${values.add(r.id)}:text::text, ${values.add(r.title)}:text::text, ${values.add(r.description)}:text::text, ${values.add(EnumTypeConverter<BlogCategory>([
+      'SET "title" = COALESCE(UPDATED."title", "blogs"."title"), "content" = COALESCE(UPDATED."content", "blogs"."content"), "image_url" = COALESCE(UPDATED."image_url", "blogs"."image_url"), "category" = COALESCE(UPDATED."category", "blogs"."category"), "created_at" = COALESCE(UPDATED."created_at", "blogs"."created_at"), "updated_at" = COALESCE(UPDATED."updated_at", "blogs"."updated_at"), "creator_id" = COALESCE(UPDATED."creator_id", "blogs"."creator_id")\n'
+      'FROM ( VALUES ${requests.map((r) => '( ${values.add(r.id)}:text::text, ${values.add(r.title)}:text::text, ${values.add(r.content)}:text::text, ${values.add(r.imageUrl)}:text::text, ${values.add(EnumTypeConverter<BlogCategory>([
                 BlogCategory.business,
                 BlogCategory.technology,
                 BlogCategory.fashion,
@@ -69,7 +69,7 @@ class _BlogRepository extends BaseRepository
                 BlogCategory.food,
                 BlogCategory.education
               ]).tryEncode(r.category))}:text::text, ${values.add(r.createdAt)}:timestamp::timestamp, ${values.add(r.updatedAt)}:timestamp::timestamp, ${values.add(r.creatorId)}:text::text )').join(', ')} )\n'
-      'AS UPDATED("id", "title", "description", "category", "created_at", "updated_at", "creator_id")\n'
+      'AS UPDATED("id", "title", "content", "image_url", "category", "created_at", "updated_at", "creator_id")\n'
       'WHERE "blogs"."id" = UPDATED."id"',
       values.values,
     );
@@ -80,7 +80,8 @@ class BlogInsertRequest {
   BlogInsertRequest({
     required this.id,
     required this.title,
-    required this.description,
+    required this.content,
+    required this.imageUrl,
     required this.category,
     required this.createdAt,
     required this.updatedAt,
@@ -89,7 +90,8 @@ class BlogInsertRequest {
 
   final String id;
   final String title;
-  final String description;
+  final String content;
+  final String imageUrl;
   final BlogCategory category;
   final DateTime createdAt;
   final DateTime updatedAt;
@@ -100,7 +102,8 @@ class BlogUpdateRequest {
   BlogUpdateRequest({
     required this.id,
     this.title,
-    this.description,
+    this.content,
+    this.imageUrl,
     this.category,
     this.createdAt,
     this.updatedAt,
@@ -109,7 +112,8 @@ class BlogUpdateRequest {
 
   final String id;
   final String? title;
-  final String? description;
+  final String? content;
+  final String? imageUrl;
   final BlogCategory? category;
   final DateTime? createdAt;
   final DateTime? updatedAt;
@@ -136,7 +140,8 @@ class BlogViewQueryable extends KeyedViewQueryable<BlogView, String> {
   BlogView decode(TypedMap map) => BlogView(
       id: map.get('id'),
       title: map.get('title'),
-      description: map.get('description'),
+      content: map.get('content'),
+      imageUrl: map.get('image_url'),
       category: map.get(
           'category',
           EnumTypeConverter<BlogCategory>([
@@ -156,7 +161,8 @@ class BlogView {
   BlogView({
     required this.id,
     required this.title,
-    required this.description,
+    required this.content,
+    required this.imageUrl,
     required this.category,
     required this.createdAt,
     required this.updatedAt,
@@ -165,7 +171,8 @@ class BlogView {
 
   final String id;
   final String title;
-  final String description;
+  final String content;
+  final String imageUrl;
   final BlogCategory category;
   final DateTime createdAt;
   final DateTime updatedAt;
