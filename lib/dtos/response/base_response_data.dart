@@ -96,7 +96,7 @@ class ConflictResponse extends Response {
 class UnauthorizedResponse extends Response {
   UnauthorizedResponse([String? message])
       : super.json(
-          statusCode: 401,
+          statusCode: HttpStatus.unauthorized,
           body: BaseResponseData.failed(message).toJson(),
         );
 }

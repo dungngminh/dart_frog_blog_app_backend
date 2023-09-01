@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:dart_frog/dart_frog.dart';
+import 'package:json_annotation/json_annotation.dart';
 import 'package:stormberry/stormberry.dart';
+import 'package:very_good_blog_app_backend/dtos/request/blogs/edit_blog_request.dart';
 import 'package:very_good_blog_app_backend/dtos/response/base_response_data.dart';
 import 'package:very_good_blog_app_backend/dtos/response/blogs/get_blog_response.dart';
 import 'package:very_good_blog_app_backend/models/blog.dart';
@@ -32,12 +36,39 @@ Future<Response> _onBlogsGetRequest(RequestContext context, String id) async {
     if (blog == null) return NotFoundResponse('Blog not found');
     return OkResponse(GetBlogResponse.fromView(blog).toJson());
   } catch (e) {
-    return ServerErrorResponse();
+    return ServerErrorResponse(e.toString());
   }
 }
 
 Future<Response> _onBlogsPatchRequest(RequestContext context, String id) async {
-  return OkResponse();
+  final db = context.read<Database>();
+  final user = context.read<UserView>();
+  try {
+    final body = await context.request.body();
+    if (body.isEmpty) return BadRequestResponse();
+    final request =
+        EditBlogRequest.fromJson(jsonDecode(body) as Map<String, dynamic>);
+    final blog = await db.blogs.queryBlog(id);
+    if (blog == null) return NotFoundResponse('Blog not found');
+    if (blog.creator.id != user.id) {
+      return ForbiddenResponse('You are not creator of this blog');
+    }
+    await db.blogs.updateOne(
+      BlogUpdateRequest(
+        id: id,
+        title: request.title,
+        content: request.content,
+        imageUrl: request.imageUrl,
+        category: request.category,
+        updatedAt: DateTime.now(),
+      ),
+    );
+    return OkResponse();
+  } on CheckedFromJsonException catch (e) {
+    return BadRequestResponse(e.message);
+  } catch (e) {
+    return ServerErrorResponse(e.toString());
+  }
 }
 
 Future<Response> _onBlogsDeleteRequest(
@@ -55,6 +86,6 @@ Future<Response> _onBlogsDeleteRequest(
     await db.blogs.deleteOne(id);
     return OkResponse();
   } catch (e) {
-    return ServerErrorResponse();
+    return ServerErrorResponse(e.toString());
   }
 }

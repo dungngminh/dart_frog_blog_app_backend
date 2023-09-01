@@ -48,7 +48,7 @@ Future<Response> _onBlogsGetRequest(RequestContext context) async {
       },
     );
   } catch (e) {
-    return ServerErrorResponse();
+    return ServerErrorResponse(e.toString());
   }
 }
 
@@ -79,6 +79,6 @@ Future<Response> _onBlogsPostRequest(RequestContext context) async {
   } on CheckedFromJsonException catch (e) {
     return BadRequestResponse(e.message);
   } catch (e) {
-    return ServerErrorResponse();
+    return ServerErrorResponse(e.toString());
   }
 }

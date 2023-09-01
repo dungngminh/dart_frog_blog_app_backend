@@ -64,6 +64,6 @@ Future<Response> _onRegisterPostRequest(RequestContext context) async {
         )
         .then((_) => CreatedResponse());
   } catch (e) {
-    return ServerErrorResponse();
+    return ServerErrorResponse(e.toString());
   }
 }

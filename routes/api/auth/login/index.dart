@@ -13,7 +13,7 @@ import 'package:very_good_blog_app_backend/util/jwt_util.dart';
 
 
 /// @Allow(POST)
-FutureOr<Response> onRequest(RequestContext context) async {
+Future<Response> onRequest(RequestContext context) async {
   return switch (context.request.method) {
     HttpMethod.post => _onLoginPostRequest(context),
     _ => Future.value(MethodNotAllowedResponse()),
@@ -48,6 +48,6 @@ Future<Response> _onLoginPostRequest(RequestContext context) async {
       LoginResponse(id: user.id, token: createToken(user.id)).toJson(),
     );
   } catch (e) {
-    return ServerErrorResponse();
+    return ServerErrorResponse(e.toString());
   }
 }
