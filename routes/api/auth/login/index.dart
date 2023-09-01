@@ -4,12 +4,12 @@ import 'dart:convert';
 import 'package:dart_frog/dart_frog.dart';
 import 'package:stormberry/stormberry.dart';
 import 'package:string_validator/string_validator.dart';
-import 'package:very_good_blog_app_backend/common/hash_extension.dart';
-import 'package:very_good_blog_app_backend/common/jwt_extension.dart';
+import 'package:very_good_blog_app_backend/common/extensions/hash_extension.dart';
 import 'package:very_good_blog_app_backend/dtos/request/auth/login_request.dart';
 import 'package:very_good_blog_app_backend/dtos/response/auth/login_response.dart';
 import 'package:very_good_blog_app_backend/dtos/response/base_response_data.dart';
 import 'package:very_good_blog_app_backend/models/user.dart';
+import 'package:very_good_blog_app_backend/util/jwt_util.dart';
 
 
 /// @Allow(POST)

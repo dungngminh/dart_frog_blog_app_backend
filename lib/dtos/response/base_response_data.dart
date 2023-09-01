@@ -109,6 +109,14 @@ class BadRequestResponse extends Response {
         );
 }
 
+class ForbiddenResponse extends Response {
+  ForbiddenResponse([String? message])
+      : super.json(
+          statusCode: HttpStatus.forbidden,
+          body: BaseResponseData.failed(message).toJson(),
+        );
+}
+
 class ServerErrorResponse extends Response {
   ServerErrorResponse([String? message])
       : super.json(

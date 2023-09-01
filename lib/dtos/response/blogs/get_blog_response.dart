@@ -3,11 +3,11 @@ import 'package:very_good_blog_app_backend/models/blog.dart';
 import 'package:very_good_blog_app_backend/models/blog_category.dart';
 import 'package:very_good_blog_app_backend/models/user.dart';
 
-part 'get_blogs_response.g.dart';
+part 'get_blog_response.g.dart';
 
 @JsonSerializable(createFactory: false)
-class GetBlogsResponse {
-  GetBlogsResponse({
+class GetBlogResponse {
+  GetBlogResponse({
     required this.id,
     required this.title,
     required this.content,
@@ -19,8 +19,8 @@ class GetBlogsResponse {
     this.isFavoriteByUser,
   });
 
-  factory GetBlogsResponse.fromView(BlogView view, {bool? isFavoriteByUser}) {
-    return GetBlogsResponse(
+  factory GetBlogResponse.fromView(BlogView view, {bool? isFavoriteByUser}) {
+    return GetBlogResponse(
       id: view.id,
       title: view.title,
       content: view.content,
@@ -29,7 +29,7 @@ class GetBlogsResponse {
       isFavoriteByUser: isFavoriteByUser,
       createdAt: view.createdAt,
       updatedAt: view.updatedAt,
-      creator: UserOfGetBlogsResponse.fromView(view.creator),
+      creator: UserOfGetBlogResponse.fromView(view.creator),
     );
   }
 
@@ -41,14 +41,14 @@ class GetBlogsResponse {
   final bool? isFavoriteByUser;
   final DateTime createdAt;
   final DateTime updatedAt;
-  final UserOfGetBlogsResponse creator;
+  final UserOfGetBlogResponse creator;
 
-  Map<String, dynamic> toJson() => _$GetBlogsResponseToJson(this);
+  Map<String, dynamic> toJson() => _$GetBlogResponseToJson(this);
 }
 
 @JsonSerializable(createFactory: false)
-class UserOfGetBlogsResponse {
-  UserOfGetBlogsResponse({
+class UserOfGetBlogResponse {
+  UserOfGetBlogResponse({
     required this.id,
     required this.fullName,
     required this.email,
@@ -57,8 +57,8 @@ class UserOfGetBlogsResponse {
     this.avatarUrl,
   });
 
-  factory UserOfGetBlogsResponse.fromView(UserView view) {
-    return UserOfGetBlogsResponse(
+  factory UserOfGetBlogResponse.fromView(UserView view) {
+    return UserOfGetBlogResponse(
       id: view.id,
       email: view.email,
       follower: view.follower,
@@ -75,5 +75,5 @@ class UserOfGetBlogsResponse {
   final int following;
   final int follower;
 
-  Map<String, dynamic> toJson() => _$UserOfGetBlogsResponseToJson(this);
+  Map<String, dynamic> toJson() => _$UserOfGetBlogResponseToJson(this);
 }

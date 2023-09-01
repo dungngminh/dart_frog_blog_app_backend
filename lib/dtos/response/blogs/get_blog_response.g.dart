@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'get_blogs_response.dart';
+part of 'get_blog_response.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Map<String, dynamic> _$GetBlogsResponseToJson(GetBlogsResponse instance) =>
+Map<String, dynamic> _$GetBlogResponseToJson(GetBlogResponse instance) =>
     <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
@@ -28,8 +28,8 @@ const _$BlogCategoryEnumMap = {
   BlogCategory.education: 'education',
 };
 
-Map<String, dynamic> _$UserOfGetBlogsResponseToJson(
-        UserOfGetBlogsResponse instance) =>
+Map<String, dynamic> _$UserOfGetBlogResponseToJson(
+        UserOfGetBlogResponse instance) =>
     <String, dynamic>{
       'id': instance.id,
       'full_name': instance.fullName,

@@ -11,6 +11,7 @@ dependencies:
   dart_frog: ^1.0.0
   dart_frog_auth: ^1.1.0
   dart_jsonwebtoken: ^2.11.0
+  dartx: ^1.2.0
   equatable: ^2.0.5
   json_annotation: ^4.8.1
   stormberry: ^0.13.1

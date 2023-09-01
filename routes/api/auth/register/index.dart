@@ -5,7 +5,7 @@ import 'package:dart_frog/dart_frog.dart';
 import 'package:stormberry/stormberry.dart';
 import 'package:string_validator/string_validator.dart';
 import 'package:uuid/uuid.dart';
-import 'package:very_good_blog_app_backend/common/hash_extension.dart';
+import 'package:very_good_blog_app_backend/common/extensions/hash_extension.dart';
 import 'package:very_good_blog_app_backend/dtos/request/auth/register_request.dart';
 import 'package:very_good_blog_app_backend/dtos/response/base_response_data.dart';
 import 'package:very_good_blog_app_backend/models/user.dart';

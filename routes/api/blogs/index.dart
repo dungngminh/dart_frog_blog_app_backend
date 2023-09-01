@@ -7,7 +7,7 @@ import 'package:uuid/uuid.dart';
 import 'package:very_good_blog_app_backend/dtos/request/blogs/create_blog_request.dart';
 import 'package:very_good_blog_app_backend/dtos/response/base_pagination_response.dart';
 import 'package:very_good_blog_app_backend/dtos/response/base_response_data.dart';
-import 'package:very_good_blog_app_backend/dtos/response/blogs/get_blogs_response.dart';
+import 'package:very_good_blog_app_backend/dtos/response/blogs/get_blog_response.dart';
 import 'package:very_good_blog_app_backend/models/blog.dart';
 import 'package:very_good_blog_app_backend/models/user.dart';
 
@@ -35,7 +35,7 @@ Future<Response> _onBlogsGetRequest(RequestContext context) async {
         offset: (currentPage - 1) * limit,
       ),
     );
-    final blogs = results.map(GetBlogsResponse.fromView);
+    final blogs = results.map(GetBlogResponse.fromView);
     final pagination = BasePaginationResponse(
       currentPage: currentPage,
       limit: limit,
