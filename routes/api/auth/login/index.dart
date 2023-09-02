@@ -43,7 +43,7 @@ Future<Response> _onLoginPostRequest(RequestContext context) async {
       ),
     );
     final user = users.firstOrNull;
-    if (user == null) return NotFoundResponse('User is not registered');
+    if (user == null) return BadRequestResponse('User is not registered');
     return OkResponse(
       LoginResponse(id: user.id, token: createToken(user.id)).toJson(),
     );

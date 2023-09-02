@@ -5,9 +5,7 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:stormberry/stormberry.dart';
 import 'package:very_good_blog_app_backend/dtos/request/users/edit_user_profile_request.dart';
 import 'package:very_good_blog_app_backend/dtos/response/base_response_data.dart';
-import 'package:very_good_blog_app_backend/dtos/response/blogs/get_user_blog_response.dart';
 import 'package:very_good_blog_app_backend/dtos/response/users/get_user_response.dart';
-import 'package:very_good_blog_app_backend/models/blog.dart';
 import 'package:very_good_blog_app_backend/models/user.dart';
 
 /// @Allow(GET, PATCH)
@@ -20,23 +18,8 @@ Future<Response> onRequest(RequestContext context) {
 }
 
 Future<Response> _onUsersMeGetRequest(RequestContext context) async {
-  final db = context.read<Database>();
   final userView = context.read<UserView>();
-  try {
-    final blogs = await db.blogs.queryBlogs(
-      QueryParams(
-        where: 'creator_id = @id',
-        values: {'id': userView.id},
-      ),
-    );
-    final getUserBlogResponse = blogs.map(GetUserBlogResponse.fromView);
-    return OkResponse({
-      'user': GetUserResponse.fromView(userView).toJson(),
-      'blogs': getUserBlogResponse.map((e) => e.toJson()).toList(),
-    });
-  } catch (e) {
-    return ServerErrorResponse(e.toString());
-  }
+  return OkResponse(GetUserResponse.fromView(userView).toJson());
 }
 
 Future<Response> _onUsersMePatchRequest(RequestContext context) async {
