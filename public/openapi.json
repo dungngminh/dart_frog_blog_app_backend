@@ -37,6 +37,18 @@
     {
       "name": "login",
       "description": "Operations about login"
+    },
+    {
+      "name": "favorites",
+      "description": "Operations about favorites"
+    },
+    {
+      "name": "me",
+      "description": "Operations about me"
+    },
+    {
+      "name": "users",
+      "description": "Operations about users"
     }
   ],
   "components": {
@@ -333,6 +345,237 @@
           }
         },
         "parameters": [],
+        "security": []
+      }
+    },
+    "/api/favorites": {
+      "get": {
+        "tags": [
+          "favorites"
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of favorites.",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [],
+        "security": []
+      },
+      "post": {
+        "tags": [
+          "favorites"
+        ],
+        "requestBody": {
+          "description": "",
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created favorites.",
+            "headers": {},
+            "content": {}
+          }
+        },
+        "parameters": [],
+        "security": []
+      }
+    },
+    "/api/users/me": {
+      "get": {
+        "tags": [
+          "me"
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of me.",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [],
+        "security": []
+      },
+      "patch": {
+        "tags": [
+          "me"
+        ],
+        "requestBody": {
+          "description": "",
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "A list of me.",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [],
+        "security": []
+      }
+    },
+    "/api/users/me/blogs": {
+      "get": {
+        "tags": [
+          "blogs"
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of blogs.",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/blogs"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [],
+        "security": []
+      },
+      "patch": {
+        "tags": [
+          "blogs"
+        ],
+        "requestBody": {
+          "description": "",
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/blogs"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "A list of blogs.",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/blogs"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [],
+        "security": []
+      }
+    },
+    "/api/users/{id}": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "responses": {
+          "200": {
+            "description": "A users.",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "deprecated": false,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": []
+      }
+    },
+    "/api/users/{id}/blogs": {
+      "get": {
+        "tags": [
+          "blogs"
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of blogs.",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/blogs"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "deprecated": false,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "security": []
       }
     }
