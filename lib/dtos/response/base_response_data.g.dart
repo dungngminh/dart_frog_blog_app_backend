@@ -6,6 +6,21 @@ part of 'base_response_data.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+BaseResponseData _$BaseResponseDataFromJson(Map<String, dynamic> json) =>
+    $checkedCreate(
+      'BaseResponseData',
+      json,
+      ($checkedConvert) {
+        final val = BaseResponseData(
+          success: $checkedConvert('success', (v) => v as bool),
+          data: $checkedConvert('data', (v) => v),
+          message: $checkedConvert(
+              'message', (v) => v as String? ?? kSuccessResponseMessage),
+        );
+        return val;
+      },
+    );
+
 Map<String, dynamic> _$BaseResponseDataToJson(BaseResponseData instance) {
   final val = <String, dynamic>{
     'success': instance.success,

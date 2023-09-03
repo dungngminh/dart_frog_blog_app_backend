@@ -6,6 +6,32 @@ part of 'get_user_blog_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+GetUserBlogResponse _$GetUserBlogResponseFromJson(Map<String, dynamic> json) =>
+    $checkedCreate(
+      'GetUserBlogResponse',
+      json,
+      ($checkedConvert) {
+        final val = GetUserBlogResponse(
+          id: $checkedConvert('id', (v) => v as String),
+          title: $checkedConvert('title', (v) => v as String),
+          content: $checkedConvert('content', (v) => v as String),
+          imageUrl: $checkedConvert('image_url', (v) => v as String),
+          category: $checkedConvert(
+              'category', (v) => $enumDecode(_$BlogCategoryEnumMap, v)),
+          createdAt:
+              $checkedConvert('created_at', (v) => DateTime.parse(v as String)),
+          updatedAt:
+              $checkedConvert('updated_at', (v) => DateTime.parse(v as String)),
+        );
+        return val;
+      },
+      fieldKeyMap: const {
+        'imageUrl': 'image_url',
+        'createdAt': 'created_at',
+        'updatedAt': 'updated_at'
+      },
+    );
+
 Map<String, dynamic> _$GetUserBlogResponseToJson(
         GetUserBlogResponse instance) =>
     <String, dynamic>{

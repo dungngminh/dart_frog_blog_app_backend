@@ -5,7 +5,7 @@ import 'package:very_good_blog_app_backend/models/user.dart';
 
 part 'get_blog_response.g.dart';
 
-@JsonSerializable(createFactory: false)
+@JsonSerializable()
 class GetBlogResponse {
   GetBlogResponse({
     required this.id,
@@ -18,6 +18,9 @@ class GetBlogResponse {
     required this.creator,
     this.isFavoriteByUser,
   });
+
+  factory GetBlogResponse.fromJson(Map<String, dynamic> json) =>
+      _$GetBlogResponseFromJson(json);
 
   factory GetBlogResponse.fromView(BlogView view, {bool? isFavoriteByUser}) {
     return GetBlogResponse(
@@ -46,7 +49,7 @@ class GetBlogResponse {
   Map<String, dynamic> toJson() => _$GetBlogResponseToJson(this);
 }
 
-@JsonSerializable(createFactory: false)
+@JsonSerializable()
 class UserOfGetBlogResponse {
   UserOfGetBlogResponse({
     required this.id,
@@ -56,6 +59,9 @@ class UserOfGetBlogResponse {
     required this.follower,
     this.avatarUrl,
   });
+
+  factory UserOfGetBlogResponse.fromJson(Map<String, dynamic> json) =>
+      _$UserOfGetBlogResponseFromJson(json);
 
   factory UserOfGetBlogResponse.fromView(UserView view) {
     return UserOfGetBlogResponse(

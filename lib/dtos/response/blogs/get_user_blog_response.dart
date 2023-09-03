@@ -4,7 +4,7 @@ import 'package:very_good_blog_app_backend/models/blog_category.dart';
 
 part 'get_user_blog_response.g.dart';
 
-@JsonSerializable(createFactory: false)
+@JsonSerializable()
 class GetUserBlogResponse {
   GetUserBlogResponse({
     required this.id,
@@ -15,6 +15,9 @@ class GetUserBlogResponse {
     required this.createdAt,
     required this.updatedAt,
   });
+
+  factory GetUserBlogResponse.fromJson(Map<String, dynamic> json) =>
+      _$GetUserBlogResponseFromJson(json);
 
   factory GetUserBlogResponse.fromView(BlogView view) {
     return GetUserBlogResponse(

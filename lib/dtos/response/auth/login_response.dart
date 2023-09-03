@@ -6,6 +6,9 @@ part 'login_response.g.dart';
 class LoginResponse {
   LoginResponse({required this.id, required this.token});
 
+  factory LoginResponse.fromJson(Map<String, dynamic> json) =>
+      _$LoginResponseFromJson(json);
+
   final String id;
   final String token;
 

@@ -7,7 +7,6 @@ import 'package:very_good_blog_app_backend/common/constants.dart';
 part 'base_response_data.g.dart';
 
 @JsonSerializable(
-  createFactory: false,
   explicitToJson: true,
   includeIfNull: false,
 )
@@ -17,6 +16,9 @@ class BaseResponseData {
     this.data,
     this.message = kSuccessResponseMessage,
   });
+
+  factory BaseResponseData.fromJson(Map<String, dynamic> json) =>
+      _$BaseResponseDataFromJson(json);
 
   factory BaseResponseData.data(dynamic data) {
     return BaseResponseData(

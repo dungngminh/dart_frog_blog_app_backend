@@ -3,7 +3,7 @@ import 'package:very_good_blog_app_backend/models/user.dart';
 
 part 'get_user_response.g.dart';
 
-@JsonSerializable(createFactory: false)
+@JsonSerializable()
 class GetUserResponse {
   GetUserResponse({
     required this.id,
@@ -13,6 +13,9 @@ class GetUserResponse {
     required this.follower,
     this.avatarUrl,
   });
+
+  factory GetUserResponse.fromJson(Map<String, dynamic> json) =>
+      _$GetUserResponseFromJson(json);
 
   factory GetUserResponse.fromView(UserView view) {
     return GetUserResponse(
