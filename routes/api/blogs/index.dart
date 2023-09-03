@@ -73,6 +73,7 @@ Future<Response> _onBlogsPostRequest(RequestContext context) async {
         createdAt: DateTime.now(),
         creatorId: user.id,
         updatedAt: DateTime.now(),
+        isDeleted: false,
       ),
     );
     return CreatedResponse('New blog is created');

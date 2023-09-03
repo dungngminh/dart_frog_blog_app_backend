@@ -41,7 +41,7 @@ class _BlogRepository extends BaseRepository
     if (requests.isEmpty) return;
     var values = QueryValues();
     await db.query(
-      'INSERT INTO "blogs" ( "id", "title", "content", "image_url", "category", "created_at", "updated_at", "creator_id" )\n'
+      'INSERT INTO "blogs" ( "id", "title", "content", "image_url", "category", "created_at", "updated_at", "creator_id", "is_deleted" )\n'
       'VALUES ${requests.map((r) => '( ${values.add(r.id)}:text, ${values.add(r.title)}:text, ${values.add(r.content)}:text, ${values.add(r.imageUrl)}:text, ${values.add(EnumTypeConverter<BlogCategory>([
                 BlogCategory.business,
                 BlogCategory.technology,
@@ -49,7 +49,7 @@ class _BlogRepository extends BaseRepository
                 BlogCategory.travel,
                 BlogCategory.food,
                 BlogCategory.education
-              ]).tryEncode(r.category))}:text, ${values.add(r.createdAt)}:timestamp, ${values.add(r.updatedAt)}:timestamp, ${values.add(r.creatorId)}:text )').join(', ')}\n',
+              ]).tryEncode(r.category))}:text, ${values.add(r.createdAt)}:timestamp, ${values.add(r.updatedAt)}:timestamp, ${values.add(r.creatorId)}:text, ${values.add(r.isDeleted)}:boolean )').join(', ')}\n',
       values.values,
     );
   }
@@ -60,7 +60,7 @@ class _BlogRepository extends BaseRepository
     var values = QueryValues();
     await db.query(
       'UPDATE "blogs"\n'
-      'SET "title" = COALESCE(UPDATED."title", "blogs"."title"), "content" = COALESCE(UPDATED."content", "blogs"."content"), "image_url" = COALESCE(UPDATED."image_url", "blogs"."image_url"), "category" = COALESCE(UPDATED."category", "blogs"."category"), "created_at" = COALESCE(UPDATED."created_at", "blogs"."created_at"), "updated_at" = COALESCE(UPDATED."updated_at", "blogs"."updated_at"), "creator_id" = COALESCE(UPDATED."creator_id", "blogs"."creator_id")\n'
+      'SET "title" = COALESCE(UPDATED."title", "blogs"."title"), "content" = COALESCE(UPDATED."content", "blogs"."content"), "image_url" = COALESCE(UPDATED."image_url", "blogs"."image_url"), "category" = COALESCE(UPDATED."category", "blogs"."category"), "created_at" = COALESCE(UPDATED."created_at", "blogs"."created_at"), "updated_at" = COALESCE(UPDATED."updated_at", "blogs"."updated_at"), "creator_id" = COALESCE(UPDATED."creator_id", "blogs"."creator_id"), "is_deleted" = COALESCE(UPDATED."is_deleted", "blogs"."is_deleted")\n'
       'FROM ( VALUES ${requests.map((r) => '( ${values.add(r.id)}:text::text, ${values.add(r.title)}:text::text, ${values.add(r.content)}:text::text, ${values.add(r.imageUrl)}:text::text, ${values.add(EnumTypeConverter<BlogCategory>([
                 BlogCategory.business,
                 BlogCategory.technology,
@@ -68,8 +68,8 @@ class _BlogRepository extends BaseRepository
                 BlogCategory.travel,
                 BlogCategory.food,
                 BlogCategory.education
-              ]).tryEncode(r.category))}:text::text, ${values.add(r.createdAt)}:timestamp::timestamp, ${values.add(r.updatedAt)}:timestamp::timestamp, ${values.add(r.creatorId)}:text::text )').join(', ')} )\n'
-      'AS UPDATED("id", "title", "content", "image_url", "category", "created_at", "updated_at", "creator_id")\n'
+              ]).tryEncode(r.category))}:text::text, ${values.add(r.createdAt)}:timestamp::timestamp, ${values.add(r.updatedAt)}:timestamp::timestamp, ${values.add(r.creatorId)}:text::text, ${values.add(r.isDeleted)}:boolean::boolean )').join(', ')} )\n'
+      'AS UPDATED("id", "title", "content", "image_url", "category", "created_at", "updated_at", "creator_id", "is_deleted")\n'
       'WHERE "blogs"."id" = UPDATED."id"',
       values.values,
     );
@@ -86,6 +86,7 @@ class BlogInsertRequest {
     required this.createdAt,
     required this.updatedAt,
     required this.creatorId,
+    required this.isDeleted,
   });
 
   final String id;
@@ -96,6 +97,7 @@ class BlogInsertRequest {
   final DateTime createdAt;
   final DateTime updatedAt;
   final String creatorId;
+  final bool isDeleted;
 }
 
 class BlogUpdateRequest {
@@ -108,6 +110,7 @@ class BlogUpdateRequest {
     this.createdAt,
     this.updatedAt,
     this.creatorId,
+    this.isDeleted,
   });
 
   final String id;
@@ -118,6 +121,7 @@ class BlogUpdateRequest {
   final DateTime? createdAt;
   final DateTime? updatedAt;
   final String? creatorId;
+  final bool? isDeleted;
 }
 
 class BlogViewQueryable extends KeyedViewQueryable<BlogView, String> {
@@ -154,7 +158,8 @@ class BlogViewQueryable extends KeyedViewQueryable<BlogView, String> {
           ]).decode),
       createdAt: map.get('created_at'),
       updatedAt: map.get('updated_at'),
-      creator: map.get('creator', UserViewQueryable().decoder));
+      creator: map.get('creator', UserViewQueryable().decoder),
+      isDeleted: map.get('is_deleted'));
 }
 
 class BlogView {
@@ -167,6 +172,7 @@ class BlogView {
     required this.createdAt,
     required this.updatedAt,
     required this.creator,
+    required this.isDeleted,
   });
 
   final String id;
@@ -177,4 +183,5 @@ class BlogView {
   final DateTime createdAt;
   final DateTime updatedAt;
   final UserView creator;
+  final bool isDeleted;
 }

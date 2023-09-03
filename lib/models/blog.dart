@@ -23,4 +23,6 @@ abstract class Blog {
   DateTime get updatedAt;
 
   User get creator;
+  
+  bool get isDeleted;
 }
