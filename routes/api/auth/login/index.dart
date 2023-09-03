@@ -9,7 +9,7 @@ import 'package:very_good_blog_app_backend/dtos/request/auth/login_request.dart'
 import 'package:very_good_blog_app_backend/dtos/response/auth/login_response.dart';
 import 'package:very_good_blog_app_backend/dtos/response/base_response_data.dart';
 import 'package:very_good_blog_app_backend/models/user.dart';
-import 'package:very_good_blog_app_backend/util/jwt_util.dart';
+import 'package:very_good_blog_app_backend/util/create_jwt.dart';
 
 
 /// @Allow(POST)
@@ -45,7 +45,7 @@ Future<Response> _onLoginPostRequest(RequestContext context) async {
     final user = users.firstOrNull;
     if (user == null) return BadRequestResponse('User is not registered');
     return OkResponse(
-      LoginResponse(id: user.id, token: createToken(user.id)).toJson(),
+      LoginResponse(id: user.id, token: createJwt(user.id)).toJson(),
     );
   } catch (e) {
     return ServerErrorResponse(e.toString());

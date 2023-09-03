@@ -23,6 +23,14 @@ CreateBlogRequest _$CreateBlogRequestFromJson(Map<String, dynamic> json) =>
       fieldKeyMap: const {'imageUrl': 'image_url'},
     );
 
+Map<String, dynamic> _$CreateBlogRequestToJson(CreateBlogRequest instance) =>
+    <String, dynamic>{
+      'title': instance.title,
+      'content': instance.content,
+      'category': _$BlogCategoryEnumMap[instance.category]!,
+      'image_url': instance.imageUrl,
+    };
+
 const _$BlogCategoryEnumMap = {
   BlogCategory.business: 'business',
   BlogCategory.technology: 'technology',

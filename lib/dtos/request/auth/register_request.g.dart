@@ -25,3 +25,11 @@ RegisterRequest _$RegisterRequestFromJson(Map<String, dynamic> json) =>
         'confirmationPassword': 'confirmation_password'
       },
     );
+
+Map<String, dynamic> _$RegisterRequestToJson(RegisterRequest instance) =>
+    <String, dynamic>{
+      'full_name': instance.fullName,
+      'email': instance.email,
+      'password': instance.password,
+      'confirmation_password': instance.confirmationPassword,
+    };

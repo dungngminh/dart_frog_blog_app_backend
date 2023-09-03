@@ -23,6 +23,14 @@ EditBlogRequest _$EditBlogRequestFromJson(Map<String, dynamic> json) =>
       fieldKeyMap: const {'imageUrl': 'image_url'},
     );
 
+Map<String, dynamic> _$EditBlogRequestToJson(EditBlogRequest instance) =>
+    <String, dynamic>{
+      'title': instance.title,
+      'content': instance.content,
+      'image_url': instance.imageUrl,
+      'category': _$BlogCategoryEnumMap[instance.category],
+    };
+
 const _$BlogCategoryEnumMap = {
   BlogCategory.business: 'business',
   BlogCategory.technology: 'technology',

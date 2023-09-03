@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'edit_user_profile_request.g.dart';
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class EditUserProfileRequest {
   EditUserProfileRequest(
     this.fullName,
@@ -14,4 +14,6 @@ class EditUserProfileRequest {
 
   final String? fullName;
   final String? avatarUrl;
+
+  Map<String, dynamic> toJson() => _$EditUserProfileRequestToJson(this);
 }

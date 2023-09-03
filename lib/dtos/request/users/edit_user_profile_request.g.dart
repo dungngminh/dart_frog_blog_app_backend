@@ -20,3 +20,10 @@ EditUserProfileRequest _$EditUserProfileRequestFromJson(
       },
       fieldKeyMap: const {'fullName': 'full_name', 'avatarUrl': 'avatar_url'},
     );
+
+Map<String, dynamic> _$EditUserProfileRequestToJson(
+        EditUserProfileRequest instance) =>
+    <String, dynamic>{
+      'full_name': instance.fullName,
+      'avatar_url': instance.avatarUrl,
+    };

@@ -1,6 +1,6 @@
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 
-String createToken(
+String createJwt(
   dynamic payload, {
   Duration expiresIn = const Duration(days: 2),
 }) {

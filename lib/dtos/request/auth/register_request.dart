@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'register_request.g.dart';
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class RegisterRequest {
   RegisterRequest({
     required this.email,
@@ -18,4 +18,6 @@ class RegisterRequest {
   final String email;
   final String password;
   final String confirmationPassword;
+
+  Map<String, dynamic> toJson() => _$RegisterRequestToJson(this);
 }

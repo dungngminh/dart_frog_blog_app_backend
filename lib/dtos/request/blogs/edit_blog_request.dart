@@ -3,7 +3,7 @@ import 'package:very_good_blog_app_backend/models/blog_category.dart';
 
 part 'edit_blog_request.g.dart';
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class EditBlogRequest {
   EditBlogRequest(
     this.title,
@@ -19,4 +19,6 @@ class EditBlogRequest {
   final String? content;
   final String? imageUrl;
   final BlogCategory? category;
+
+  Map<String, dynamic> toJson() => _$EditBlogRequestToJson(this);
 }
