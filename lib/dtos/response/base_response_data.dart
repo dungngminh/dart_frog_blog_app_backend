@@ -18,7 +18,7 @@ class BaseResponseData {
     this.message = kSuccessResponseMessage,
   });
 
-  factory BaseResponseData.data(Map<String, dynamic> data) {
+  factory BaseResponseData.data(dynamic data) {
     return BaseResponseData(
       success: true,
       data: data,
@@ -29,7 +29,6 @@ class BaseResponseData {
     return BaseResponseData(
       success: true,
       message: message ?? kSuccessResponseMessage,
-      data: const {},
     );
   }
 
@@ -42,14 +41,14 @@ class BaseResponseData {
 
   final bool success;
   final String message;
-  final Map<String, dynamic>? data;
+  final dynamic data;
 
   Map<String, dynamic> toJson() => _$BaseResponseDataToJson(this);
 
   BaseResponseData copyWith({
     bool? success,
     String? message,
-    Map<String, dynamic>? data,
+    dynamic data,
   }) {
     return BaseResponseData(
       success: success ?? this.success,
@@ -60,7 +59,7 @@ class BaseResponseData {
 }
 
 class OkResponse extends Response {
-  OkResponse([Map<String, dynamic>? data])
+  OkResponse([dynamic data])
       : super.json(
           statusCode: HttpStatus.ok,
           body: data == null
