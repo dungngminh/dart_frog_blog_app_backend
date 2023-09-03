@@ -1,10 +1,11 @@
 import 'dart:convert';
 
 import 'package:dart_frog/dart_frog.dart';
+import 'package:json_annotation/json_annotation.dart';
 import 'package:stormberry/stormberry.dart';
 import 'package:very_good_blog_app_backend/dtos/request/users/edit_user_profile_request.dart';
 import 'package:very_good_blog_app_backend/dtos/response/base_response_data.dart';
-import 'package:very_good_blog_app_backend/dtos/response/users/get_user_response.dart';
+import 'package:very_good_blog_app_backend/dtos/response/users/profiles/get_user_profile_response.dart';
 import 'package:very_good_blog_app_backend/models/user.dart';
 
 /// @Allow(GET, PATCH)
@@ -27,7 +28,7 @@ Future<Response> _onUserByIdGetRequest(RequestContext context, String id) {
       .then<Response>(
         (user) => user == null
             ? NotFoundResponse('User not found')
-            : OkResponse(GetUserResponse.fromView(user).toJson()),
+            : OkResponse(GetUserProfileResponse.fromView(user).toJson()),
       )
       .catchError((_) => ServerErrorResponse());
 }
@@ -44,7 +45,8 @@ Future<Response> _onUserByIdPatchRequest(
   if (body.isEmpty) {
     return BadRequestResponse();
   }
-  final request =
+  try {
+    final request =
       EditUserProfileRequest.fromJson(jsonDecode(body) as Map<String, dynamic>);
   return context
       .read<Database>()
@@ -58,4 +60,8 @@ Future<Response> _onUserByIdPatchRequest(
       )
       .then<Response>((_) => OkResponse())
       .onError((e, s) => ServerErrorResponse(e.toString()));
+  } on CheckedFromJsonException catch (e) {
+    return BadRequestResponse(e.message);
+  }
+  
 }

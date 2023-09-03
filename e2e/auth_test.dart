@@ -9,9 +9,7 @@ import 'package:very_good_blog_app_backend/dtos/request/auth/register_request.da
 import 'package:very_good_blog_app_backend/dtos/response/auth/login_response.dart';
 import 'package:very_good_blog_app_backend/dtos/response/base_response_data.dart';
 
-Map<String, String> headers = {
-  HttpHeaders.contentTypeHeader: ContentType.json.value,
-};
+import 'helpers.dart';
 
 void main() {
   group('E2E Authentication', () {

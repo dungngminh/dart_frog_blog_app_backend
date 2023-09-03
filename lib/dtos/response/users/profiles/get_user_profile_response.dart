@@ -1,11 +1,11 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:very_good_blog_app_backend/models/user.dart';
 
-part 'get_user_response.g.dart';
+part 'get_user_profile_response.g.dart';
 
 @JsonSerializable()
-class GetUserResponse {
-  GetUserResponse({
+class GetUserProfileResponse {
+  GetUserProfileResponse({
     required this.id,
     required this.fullName,
     required this.email,
@@ -14,11 +14,11 @@ class GetUserResponse {
     this.avatarUrl,
   });
 
-  factory GetUserResponse.fromJson(Map<String, dynamic> json) =>
-      _$GetUserResponseFromJson(json);
+  factory GetUserProfileResponse.fromJson(Map<String, dynamic> json) =>
+      _$GetUserProfileResponseFromJson(json);
 
-  factory GetUserResponse.fromView(UserView view) {
-    return GetUserResponse(
+  factory GetUserProfileResponse.fromView(UserView view) {
+    return GetUserProfileResponse(
       id: view.id,
       fullName: view.fullName,
       email: view.email,
@@ -35,5 +35,5 @@ class GetUserResponse {
   final int following;
   final int follower;
 
-  Map<String, dynamic> toJson() => _$GetUserResponseToJson(this);
+  Map<String, dynamic> toJson() => _$GetUserProfileResponseToJson(this);
 }

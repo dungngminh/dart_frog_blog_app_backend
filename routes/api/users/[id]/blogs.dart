@@ -1,7 +1,7 @@
 import 'package:dart_frog/dart_frog.dart';
 import 'package:stormberry/stormberry.dart';
 import 'package:very_good_blog_app_backend/dtos/response/base_response_data.dart';
-import 'package:very_good_blog_app_backend/dtos/response/blogs/get_user_blog_response.dart';
+import 'package:very_good_blog_app_backend/dtos/response/users/blogs/get_user_blog_response.dart';
 import 'package:very_good_blog_app_backend/models/blog.dart';
 
 /// @Allow(GET)

@@ -1,17 +1,18 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'get_user_response.dart';
+part of 'get_user_profile_response.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-GetUserResponse _$GetUserResponseFromJson(Map<String, dynamic> json) =>
+GetUserProfileResponse _$GetUserProfileResponseFromJson(
+        Map<String, dynamic> json) =>
     $checkedCreate(
-      'GetUserResponse',
+      'GetUserProfileResponse',
       json,
       ($checkedConvert) {
-        final val = GetUserResponse(
+        final val = GetUserProfileResponse(
           id: $checkedConvert('id', (v) => v as String),
           fullName: $checkedConvert('full_name', (v) => v as String),
           email: $checkedConvert('email', (v) => v as String),
@@ -24,7 +25,8 @@ GetUserResponse _$GetUserResponseFromJson(Map<String, dynamic> json) =>
       fieldKeyMap: const {'fullName': 'full_name', 'avatarUrl': 'avatar_url'},
     );
 
-Map<String, dynamic> _$GetUserResponseToJson(GetUserResponse instance) =>
+Map<String, dynamic> _$GetUserProfileResponseToJson(
+        GetUserProfileResponse instance) =>
     <String, dynamic>{
       'id': instance.id,
       'full_name': instance.fullName,
