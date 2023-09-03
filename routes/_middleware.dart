@@ -13,5 +13,8 @@ final db = Database(
 );
 
 Handler middleware(Handler handler) {
-  return handler.use(requestLogger()).use(provider<Database>((_) => db));
+  return handler
+      .use(requestLogger())
+      // .use(fromShelfMiddleware(enforceSSL()))
+      .use(provider<Database>((_) => db));
 }

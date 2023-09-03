@@ -17,13 +17,17 @@ class GetUserProfileResponse {
   factory GetUserProfileResponse.fromJson(Map<String, dynamic> json) =>
       _$GetUserProfileResponseFromJson(json);
 
-  factory GetUserProfileResponse.fromView(UserView view) {
+  factory GetUserProfileResponse.fromDb({
+    required UserView view,
+    required int following,
+    required int follower,
+  }) {
     return GetUserProfileResponse(
       id: view.id,
       fullName: view.fullName,
       email: view.email,
-      following: view.following,
-      follower: view.follower,
+      following: following,
+      follower: follower,
       avatarUrl: view.avatarUrl,
     );
   }
