@@ -54,16 +54,3 @@ jobs:
           context: build/
           push: true
           tags: dungngminh/server:latest
-
-      - name: Use Node 16
-        uses: actions/setup-node@v1
-        with:
-          node-version: 16.x
-
-      - name: Install Railway
-        run: npm i -g @railway/cli
-
-      - name: Deploy
-        run: railway up
-        env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
