@@ -1,0 +1,59 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+
+      - name: Install Dart Frog
+        run: dart pub global activate dart_frog_cli
+
+      - name: Create Dev Build
+        run: dart_frog build
+
+      - cd: Change Directory
+        run: cd build/
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          push: true
+          tags: dungngminh/very_good_blog_app_backend:latest
+
+      - name: Use Node 12
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+
+      - name: Install Railway
+        run: npm i -g @railway/cli
+
+      - name: Deploy
+        run: railway up
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
