@@ -46,10 +46,10 @@ jobs:
           push: true
           tags: dungngminh/very_good_blog_app_backend:latest
 
-      - name: Use Node 12
+      - name: Use Node 16
         uses: actions/setup-node@v1
         with:
-          node-version: 12.x
+          node-version: 16.x
 
       - name: Install Railway
         run: npm i -g @railway/cli
