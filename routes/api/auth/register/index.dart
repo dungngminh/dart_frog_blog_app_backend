@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:dart_frog/dart_frog.dart';
 import 'package:stormberry/stormberry.dart';
@@ -9,6 +8,7 @@ import 'package:very_good_blog_app_backend/common/extensions/hash_extension.dart
 import 'package:very_good_blog_app_backend/dtos/request/auth/register_request.dart';
 import 'package:very_good_blog_app_backend/dtos/response/base_response_data.dart';
 import 'package:very_good_blog_app_backend/models/user.dart';
+import 'package:very_good_blog_app_backend/util/json_util.dart';
 
 
 
@@ -28,7 +28,7 @@ Future<Response> _onRegisterPostRequest(RequestContext context) async {
   if (body.isEmpty) return BadRequestResponse();
 
   final request =
-      RegisterRequest.fromJson(jsonDecode(body) as Map<String, dynamic>);
+      RegisterRequest.fromJson(body.asJson());
 
   if (request.password != request.confirmationPassword) {
     return BadRequestResponse('Confirmation password not match');

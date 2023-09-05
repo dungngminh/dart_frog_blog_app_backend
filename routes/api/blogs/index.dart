@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:dart_frog/dart_frog.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -10,6 +9,7 @@ import 'package:very_good_blog_app_backend/dtos/response/base_response_data.dart
 import 'package:very_good_blog_app_backend/dtos/response/blogs/get_blog_response.dart';
 import 'package:very_good_blog_app_backend/models/blog.dart';
 import 'package:very_good_blog_app_backend/models/user.dart';
+import 'package:very_good_blog_app_backend/util/json_util.dart';
 
 /// @Allow(GET, POST)
 /// @Query(limit)
@@ -60,8 +60,7 @@ Future<Response> _onBlogsPostRequest(RequestContext context) async {
 
   if (body.isEmpty) return BadRequestResponse();
   try {
-    final request =
-        CreateBlogRequest.fromJson(jsonDecode(body) as Map<String, dynamic>);
+    final request = CreateBlogRequest.fromJson(body.asJson());
 
     await db.blogs.insertOne(
       BlogInsertRequest(

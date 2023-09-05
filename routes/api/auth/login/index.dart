@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:dart_frog/dart_frog.dart';
 import 'package:stormberry/stormberry.dart';
@@ -10,6 +9,7 @@ import 'package:very_good_blog_app_backend/dtos/response/auth/login_response.dar
 import 'package:very_good_blog_app_backend/dtos/response/base_response_data.dart';
 import 'package:very_good_blog_app_backend/models/user.dart';
 import 'package:very_good_blog_app_backend/util/create_jwt.dart';
+import 'package:very_good_blog_app_backend/util/json_util.dart';
 
 
 /// @Allow(POST)
@@ -26,8 +26,7 @@ Future<Response> _onLoginPostRequest(RequestContext context) async {
   final body = await context.request.body();
 
   if (body.isEmpty) return BadRequestResponse();
-  final request =
-      LoginRequest.fromJson(jsonDecode(body) as Map<String, dynamic>);
+  final request = LoginRequest.fromJson(body.asJson());
 
   if (!isEmail(request.email)) {
     return BadRequestResponse('Email format is wrong, please check again');

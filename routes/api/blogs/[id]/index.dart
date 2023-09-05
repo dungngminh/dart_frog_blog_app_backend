@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dart_frog/dart_frog.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:stormberry/stormberry.dart';
@@ -8,6 +6,7 @@ import 'package:very_good_blog_app_backend/dtos/response/base_response_data.dart
 import 'package:very_good_blog_app_backend/dtos/response/blogs/get_blog_response.dart';
 import 'package:very_good_blog_app_backend/models/blog.dart';
 import 'package:very_good_blog_app_backend/models/user.dart';
+import 'package:very_good_blog_app_backend/util/json_util.dart';
 
 /// @Allow(GET, PATCH, DELETE)
 Future<Response> onRequest(RequestContext context, String id) {
@@ -46,8 +45,7 @@ Future<Response> _onBlogsPatchRequest(RequestContext context, String id) async {
   try {
     final body = await context.request.body();
     if (body.isEmpty) return BadRequestResponse();
-    final request =
-        EditBlogRequest.fromJson(jsonDecode(body) as Map<String, dynamic>);
+    final request = EditBlogRequest.fromJson(body.asJson());
     final blog = await db.blogs.queryBlog(id);
     if (blog == null) return NotFoundResponse('Blog not found');
     if (blog.creator.id != user.id) {

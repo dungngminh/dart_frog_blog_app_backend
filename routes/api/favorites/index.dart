@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:dart_frog/dart_frog.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -9,6 +8,7 @@ import 'package:very_good_blog_app_backend/dtos/response/favorites/get_user_favo
 import 'package:very_good_blog_app_backend/models/blog.dart';
 import 'package:very_good_blog_app_backend/models/favorite_blogs_users.dart';
 import 'package:very_good_blog_app_backend/models/user.dart';
+import 'package:very_good_blog_app_backend/util/json_util.dart';
 
 /// @Allow(GET, POST)
 Future<Response> onRequest(RequestContext context) {
@@ -29,7 +29,7 @@ Future<Response> _onFavoritesGetRequest(RequestContext context) {
       )
       .then((r) => r.map(GetUserFavoriteBlogResponse.fromView).toList())
       .then<Response>((res) => OkResponse(res.map((e) => e.toJson()).toList()))
-      .onError((e, s) => ServerErrorResponse(e.toString()));
+      .onError((e, _) => ServerErrorResponse(e.toString()));
 }
 
 Future<Response> _onFavoritesPostRequest(RequestContext context) async {
@@ -40,8 +40,7 @@ Future<Response> _onFavoritesPostRequest(RequestContext context) async {
     return BadRequestResponse();
   }
   try {
-    final request =
-        FavoriteBlogRequest.fromJson(jsonDecode(body) as Map<String, dynamic>);
+    final request = FavoriteBlogRequest.fromJson(body.asJson());
 
     final requestedBlog = await db.blogs.queryBlog(request.blogId);
     if (requestedBlog == null) {
@@ -73,7 +72,7 @@ Future<Response> _onFavoritesPostRequest(RequestContext context) async {
             ),
           )
           .then<Response>((_) => OkResponse())
-          .onError((e, s) => ServerErrorResponse(e.toString()));
+          .onError((e, _) => ServerErrorResponse(e.toString()));
     }
     return db
         .query(
@@ -82,7 +81,7 @@ Future<Response> _onFavoritesPostRequest(RequestContext context) async {
           {'blogId': request.blogId, 'userId': userView.id},
         )
         .then<Response>((_) => OkResponse())
-        .onError((e, s) => ServerErrorResponse(e.toString()));
+        .onError((e, _) => ServerErrorResponse(e.toString()));
   } on CheckedFromJsonException catch (e) {
     return BadRequestResponse(e.message);
   }

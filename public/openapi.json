@@ -31,6 +31,10 @@
       "description": "Operations about blogs"
     },
     {
+      "name": "followings",
+      "description": "Operations about followings"
+    },
+    {
       "name": "register",
       "description": "Operations about register"
     },
@@ -41,6 +45,10 @@
     {
       "name": "favorites",
       "description": "Operations about favorites"
+    },
+    {
+      "name": "followers",
+      "description": "Operations about followers"
     },
     {
       "name": "profiles",
@@ -290,6 +298,33 @@
         "security": []
       }
     },
+    "/api/followings": {
+      "post": {
+        "tags": [
+          "followings"
+        ],
+        "requestBody": {
+          "description": "",
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created followings.",
+            "headers": {},
+            "content": {}
+          }
+        },
+        "parameters": [],
+        "security": []
+      }
+    },
     "/api/auth/register": {
       "post": {
         "tags": [
@@ -409,6 +444,78 @@
                   "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/blogs"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "deprecated": false,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": []
+      }
+    },
+    "/api/users/{id}/followers": {
+      "get": {
+        "tags": [
+          "followers"
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of followers.",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "deprecated": false,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": []
+      }
+    },
+    "/api/users/{id}/followings": {
+      "get": {
+        "tags": [
+          "followings"
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of followings.",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
                   }
                 }
               }
