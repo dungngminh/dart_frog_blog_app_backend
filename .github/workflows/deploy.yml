@@ -25,7 +25,7 @@ jobs:
       - name: Create Dev Build
         run: dart_frog build
 
-      - cd: Change Directory
+      - name: Change Directory to build folder
         run: cd build/
 
       - name: Set up QEMU
@@ -42,6 +42,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
+          context: build/
           push: true
           tags: dungngminh/very_good_blog_app_backend:latest
 
