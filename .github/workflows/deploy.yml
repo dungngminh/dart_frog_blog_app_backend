@@ -35,7 +35,7 @@ jobs:
           write-mode: overwrite
           contents: |
             [phases.setup]
-            nixpkgsArchive = '78d1b099125d5db61cc0275fb366806156bf2e9e'
+            nixpkgsArchive = 'bc901a14315f03cb02d5be6d7e4c8075cd0fe36c'
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
