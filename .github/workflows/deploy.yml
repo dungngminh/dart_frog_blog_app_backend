@@ -28,6 +28,15 @@ jobs:
       - name: Change Directory to build folder
         run: cd build/
 
+      - name: Overwrite file
+        uses: "DamianReeves/write-file-action@master"
+        with:
+          path: nixpacks.toml
+          write-mode: overwrite
+          contents: |
+            [phases.setup]
+            nixpkgsArchive = '78d1b099125d5db61cc0275fb366806156bf2e9e'
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
       - name: Set up Docker Buildx
