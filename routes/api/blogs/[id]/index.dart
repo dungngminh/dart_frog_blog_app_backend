@@ -21,14 +21,7 @@ Future<Response> onRequest(RequestContext context, String id) {
 Future<Response> _onBlogsGetRequest(RequestContext context, String id) async {
   final db = context.read<Database>();
 
-  /// TODO: handle post is favorited by user
-  // final token = context.request.headers.bearer();
-  // if(token != null){
-  //   final userView = JwtHandler(userRepository: db.users).userFromToken(token);
-
-  // }else{
-
-  // }
+  // TODO(dungngminh): handle post is favorited by user
 
   try {
     final blog = await db.blogs.queryBlog(id);

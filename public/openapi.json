@@ -3,7 +3,7 @@
   "info": {
     "title": "A sample API",
     "description": "A sample API",
-    "termsOfService": "http://localhost",
+    "termsOfService": "https://very-good-blog-app.up.railway.app",
     "contact": {
       "name": "none",
       "url": "http://localhost",
@@ -17,12 +17,16 @@
   },
   "externalDocs": {
     "description": "",
-    "url": "http://localhost/"
+    "url": "https://very-good-blog-app.up.railway.app/"
   },
   "servers": [
     {
       "url": "http://localhost:8080",
       "description": "Local server"
+    },
+    {
+      "url": "https://very-good-blog-app.up.railway.app",
+      "description": "Production server"
     }
   ],
   "tags": [
@@ -108,9 +112,7 @@
   "paths": {
     "/api/blogs": {
       "get": {
-        "tags": [
-          "blogs"
-        ],
+        "tags": ["blogs"],
         "responses": {
           "200": {
             "description": "A list of blogs.",
@@ -152,9 +154,7 @@
         "security": []
       },
       "post": {
-        "tags": [
-          "blogs"
-        ],
+        "tags": ["blogs"],
         "requestBody": {
           "description": "",
           "required": false,
@@ -200,9 +200,7 @@
     },
     "/api/blogs/{id}": {
       "get": {
-        "tags": [
-          "blogs"
-        ],
+        "tags": ["blogs"],
         "responses": {
           "200": {
             "description": "A blogs.",
@@ -231,9 +229,7 @@
         "security": []
       },
       "delete": {
-        "tags": [
-          "blogs"
-        ],
+        "tags": ["blogs"],
         "responses": {
           "204": {
             "description": "Deleted",
@@ -256,9 +252,7 @@
         "security": []
       },
       "patch": {
-        "tags": [
-          "blogs"
-        ],
+        "tags": ["blogs"],
         "requestBody": {
           "description": "",
           "required": false,
@@ -300,9 +294,7 @@
     },
     "/api/followings": {
       "post": {
-        "tags": [
-          "followings"
-        ],
+        "tags": ["followings"],
         "requestBody": {
           "description": "",
           "required": false,
@@ -327,9 +319,7 @@
     },
     "/api/auth/register": {
       "post": {
-        "tags": [
-          "register"
-        ],
+        "tags": ["register"],
         "requestBody": {
           "description": "",
           "required": false,
@@ -354,9 +344,7 @@
     },
     "/api/auth/login": {
       "post": {
-        "tags": [
-          "login"
-        ],
+        "tags": ["login"],
         "requestBody": {
           "description": "",
           "required": false,
@@ -381,9 +369,7 @@
     },
     "/api/favorites": {
       "get": {
-        "tags": [
-          "favorites"
-        ],
+        "tags": ["favorites"],
         "responses": {
           "200": {
             "description": "A list of favorites.",
@@ -404,9 +390,7 @@
         "security": []
       },
       "post": {
-        "tags": [
-          "favorites"
-        ],
+        "tags": ["favorites"],
         "requestBody": {
           "description": "",
           "required": false,
@@ -431,9 +415,7 @@
     },
     "/api/users/{id}/blogs": {
       "get": {
-        "tags": [
-          "blogs"
-        ],
+        "tags": ["blogs"],
         "responses": {
           "200": {
             "description": "A list of blogs.",
@@ -467,9 +449,7 @@
     },
     "/api/users/{id}/followers": {
       "get": {
-        "tags": [
-          "followers"
-        ],
+        "tags": ["followers"],
         "responses": {
           "200": {
             "description": "A list of followers.",
@@ -503,9 +483,7 @@
     },
     "/api/users/{id}/followings": {
       "get": {
-        "tags": [
-          "followings"
-        ],
+        "tags": ["followings"],
         "responses": {
           "200": {
             "description": "A list of followings.",
@@ -539,9 +517,7 @@
     },
     "/api/users/{id}/profiles": {
       "get": {
-        "tags": [
-          "profiles"
-        ],
+        "tags": ["profiles"],
         "responses": {
           "200": {
             "description": "A list of profiles.",
@@ -573,9 +549,7 @@
         "security": []
       },
       "patch": {
-        "tags": [
-          "profiles"
-        ],
+        "tags": ["profiles"],
         "requestBody": {
           "description": "",
           "required": false,

@@ -3,7 +3,7 @@
   "info": {
     "title": "A sample API",
     "description": "A sample API",
-    "termsOfService": "http://localhost",
+    "termsOfService": "https://very-good-blog-app.up.railway.app",
     "contact": {
       "name": "none",
       "url": "http://localhost",
@@ -17,12 +17,16 @@
   },
   "externalDocs": {
     "description": "",
-    "url": "http://localhost/"
+    "url": "https://very-good-blog-app.up.railway.app/"
   },
   "servers": [
     {
       "url": "http://localhost:8080",
       "description": "Local server"
+    },
+    {
+      "url": "https://very-good-blog-app.up.railway.app/",
+      "description": "Railway server"
     }
   ],
   "paths": {}
