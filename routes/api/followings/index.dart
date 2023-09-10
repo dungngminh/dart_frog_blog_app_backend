@@ -5,7 +5,7 @@ import 'package:very_good_blog_app_backend/dtos/request/followings/create_follow
 import 'package:very_good_blog_app_backend/dtos/response/base_response_data.dart';
 import 'package:very_good_blog_app_backend/models/following_follower.dart';
 import 'package:very_good_blog_app_backend/models/user.dart';
-import 'package:very_good_blog_app_backend/util/json_util.dart';
+import 'package:very_good_blog_app_backend/util/json_ext.dart';
 
 /// @Allow(POST)
 Future<Response> onRequest(RequestContext context) {

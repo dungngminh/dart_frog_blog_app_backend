@@ -6,7 +6,7 @@ import 'package:very_good_blog_app_backend/dtos/response/base_response_data.dart
 import 'package:very_good_blog_app_backend/dtos/response/blogs/get_blog_response.dart';
 import 'package:very_good_blog_app_backend/models/blog.dart';
 import 'package:very_good_blog_app_backend/models/user.dart';
-import 'package:very_good_blog_app_backend/util/json_util.dart';
+import 'package:very_good_blog_app_backend/util/json_ext.dart';
 
 /// @Allow(GET, PATCH, DELETE)
 Future<Response> onRequest(RequestContext context, String id) {
