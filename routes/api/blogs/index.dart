@@ -1,15 +1,14 @@
-
 import 'package:dart_frog/dart_frog.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:stormberry/stormberry.dart';
 import 'package:uuid/uuid.dart';
+import 'package:very_good_blog_app_backend/common/extensions/json_ext.dart';
 import 'package:very_good_blog_app_backend/dtos/request/blogs/create_blog_request.dart';
 import 'package:very_good_blog_app_backend/dtos/response/base_pagination_response.dart';
 import 'package:very_good_blog_app_backend/dtos/response/base_response_data.dart';
 import 'package:very_good_blog_app_backend/dtos/response/blogs/get_blog_response.dart';
 import 'package:very_good_blog_app_backend/models/blog.dart';
 import 'package:very_good_blog_app_backend/models/user.dart';
-import 'package:very_good_blog_app_backend/util/json_ext.dart';
 
 /// @Allow(GET, POST)
 /// @Query(limit)
@@ -59,26 +58,25 @@ Future<Response> _onBlogsPostRequest(RequestContext context) async {
   final body = await context.request.body();
 
   if (body.isEmpty) return BadRequestResponse();
-  try {
-    final request = CreateBlogRequest.fromJson(body.asJson());
+  final request = CreateBlogRequest.fromJson(body.asJson());
 
-    await db.blogs.insertOne(
-      BlogInsertRequest(
-        id: const Uuid().v4(),
-        title: request.title,
-        category: request.category,
-        content: request.content,
-        imageUrl: request.imageUrl,
-        createdAt: DateTime.now(),
-        creatorId: user.id,
-        updatedAt: DateTime.now(),
-        isDeleted: false,
-      ),
-    );
-    return CreatedResponse('New blog is created');
-  } on CheckedFromJsonException catch (e) {
-    return BadRequestResponse(e.message);
-  } catch (e) {
-    return ServerErrorResponse(e.toString());
-  }
+  return db.blogs
+      .insertOne(
+        BlogInsertRequest(
+          id: const Uuid().v4(),
+          title: request.title,
+          category: request.category,
+          content: request.content,
+          imageUrl: request.imageUrl,
+          createdAt: DateTime.now(),
+          creatorId: user.id,
+          updatedAt: DateTime.now(),
+          isDeleted: false,
+        ),
+      )
+      .then<Response>((_) => CreatedResponse('New blog is created'))
+      .onError<CheckedFromJsonException>(
+        (e, _) => BadRequestResponse(e.message),
+      )
+      .onError((e, _) => ServerErrorResponse(e.toString()));
 }

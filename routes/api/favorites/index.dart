@@ -8,7 +8,7 @@ import 'package:very_good_blog_app_backend/dtos/response/favorites/get_user_favo
 import 'package:very_good_blog_app_backend/models/blog.dart';
 import 'package:very_good_blog_app_backend/models/favorite_blogs_users.dart';
 import 'package:very_good_blog_app_backend/models/user.dart';
-import 'package:very_good_blog_app_backend/util/json_ext.dart';
+import 'package:very_good_blog_app_backend/common/extensions/json_ext.dart';
 
 /// @Allow(GET, POST)
 Future<Response> onRequest(RequestContext context) {

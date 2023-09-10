@@ -7,7 +7,7 @@ import 'package:very_good_blog_app_backend/dtos/response/base_response_data.dart
 import 'package:very_good_blog_app_backend/dtos/response/users/profiles/get_user_profile_response.dart';
 import 'package:very_good_blog_app_backend/models/following_follower.dart';
 import 'package:very_good_blog_app_backend/models/user.dart';
-import 'package:very_good_blog_app_backend/util/json_ext.dart';
+import 'package:very_good_blog_app_backend/common/extensions/json_ext.dart';
 
 /// @Allow(GET, PATCH)
 Future<Response> onRequest(

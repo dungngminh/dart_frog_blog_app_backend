@@ -16,20 +16,20 @@ class GetBlogResponse {
     required this.createdAt,
     required this.updatedAt,
     required this.creator,
-    this.isFavoriteByUser,
+    this.isFavoritedByUser,
   });
 
   factory GetBlogResponse.fromJson(Map<String, dynamic> json) =>
       _$GetBlogResponseFromJson(json);
 
-  factory GetBlogResponse.fromView(BlogView view, {bool? isFavoriteByUser}) {
+  factory GetBlogResponse.fromView(BlogView view, {bool? isFavoritedByUser}) {
     return GetBlogResponse(
       id: view.id,
       title: view.title,
       content: view.content,
       imageUrl: view.imageUrl,
       category: view.category,
-      isFavoriteByUser: isFavoriteByUser,
+      isFavoritedByUser: isFavoritedByUser,
       createdAt: view.createdAt,
       updatedAt: view.updatedAt,
       creator: UserOfGetBlogResponse.fromView(view.creator),
@@ -41,7 +41,7 @@ class GetBlogResponse {
   final String content;
   final String imageUrl;
   final BlogCategory category;
-  final bool? isFavoriteByUser;
+  final bool? isFavoritedByUser;
   final DateTime createdAt;
   final DateTime updatedAt;
   final UserOfGetBlogResponse creator;

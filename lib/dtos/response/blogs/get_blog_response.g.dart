@@ -24,8 +24,8 @@ GetBlogResponse _$GetBlogResponseFromJson(Map<String, dynamic> json) =>
               $checkedConvert('updated_at', (v) => DateTime.parse(v as String)),
           creator: $checkedConvert('creator',
               (v) => UserOfGetBlogResponse.fromJson(v as Map<String, dynamic>)),
-          isFavoriteByUser:
-              $checkedConvert('is_favorite_by_user', (v) => v as bool?),
+          isFavoritedByUser:
+              $checkedConvert('is_favorited_by_user', (v) => v as bool?),
         );
         return val;
       },
@@ -33,7 +33,7 @@ GetBlogResponse _$GetBlogResponseFromJson(Map<String, dynamic> json) =>
         'imageUrl': 'image_url',
         'createdAt': 'created_at',
         'updatedAt': 'updated_at',
-        'isFavoriteByUser': 'is_favorite_by_user'
+        'isFavoritedByUser': 'is_favorited_by_user'
       },
     );
 
@@ -44,7 +44,7 @@ Map<String, dynamic> _$GetBlogResponseToJson(GetBlogResponse instance) =>
       'content': instance.content,
       'image_url': instance.imageUrl,
       'category': _$BlogCategoryEnumMap[instance.category]!,
-      'is_favorite_by_user': instance.isFavoriteByUser,
+      'is_favorited_by_user': instance.isFavoritedByUser,
       'created_at': instance.createdAt.toIso8601String(),
       'updated_at': instance.updatedAt.toIso8601String(),
       'creator': instance.creator.toJson(),

@@ -1,12 +1,15 @@
 import 'package:dart_frog/dart_frog.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:stormberry/stormberry.dart';
+import 'package:very_good_blog_app_backend/common/extensions/header_extesion.dart';
+import 'package:very_good_blog_app_backend/common/extensions/json_ext.dart';
 import 'package:very_good_blog_app_backend/dtos/request/blogs/edit_blog_request.dart';
 import 'package:very_good_blog_app_backend/dtos/response/base_response_data.dart';
 import 'package:very_good_blog_app_backend/dtos/response/blogs/get_blog_response.dart';
 import 'package:very_good_blog_app_backend/models/blog.dart';
+import 'package:very_good_blog_app_backend/models/favorite_blogs_users.dart';
 import 'package:very_good_blog_app_backend/models/user.dart';
-import 'package:very_good_blog_app_backend/util/json_ext.dart';
+import 'package:very_good_blog_app_backend/util/jwt_handler.dart';
 
 /// @Allow(GET, PATCH, DELETE)
 Future<Response> onRequest(RequestContext context, String id) {
@@ -20,13 +23,34 @@ Future<Response> onRequest(RequestContext context, String id) {
 
 Future<Response> _onBlogsGetRequest(RequestContext context, String id) async {
   final db = context.read<Database>();
-
-  // TODO(dungngminh): handle post is favorited by user
-
+  UserView? user;
+  final bearerToken = context.request.headers.bearer();
+  if (bearerToken != null) {
+    final jwtHandler = context.read<JwtHandler>();
+    user = await jwtHandler.userFromToken(bearerToken);
+  }
   try {
     final blog = await db.blogs.queryBlog(id);
     if (blog == null) return NotFoundResponse('Blog not found');
-    return OkResponse(GetBlogResponse.fromView(blog).toJson());
+    bool? isFavoritedByUser;
+    if (user != null) {
+      final foundBlog =
+          (await db.favoriteBlogsUserses.queryFavoriteBlogsUserses(
+        QueryParams(
+          where: 'blog_id=@blogId and user_id=@userId',
+          values: {
+            'blogId': id,
+            'userId': user.id,
+          },
+        ),
+      ))
+              .firstOrNull;
+      isFavoritedByUser = foundBlog != null;
+    }
+    return OkResponse(
+      GetBlogResponse.fromView(blog, isFavoritedByUser: isFavoritedByUser)
+          .toJson(),
+    );
   } catch (e) {
     return ServerErrorResponse(e.toString());
   }

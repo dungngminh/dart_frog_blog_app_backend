@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:dart_frog/dart_frog.dart';
 import 'package:stormberry/stormberry.dart';
+import 'package:very_good_blog_app_backend/models/user.dart';
+import 'package:very_good_blog_app_backend/util/jwt_handler.dart';
 
 final db = Database(
   host: Platform.environment['PGHOST'],
@@ -16,5 +18,6 @@ Handler middleware(Handler handler) {
   return handler
       .use(requestLogger())
       // .use(fromShelfMiddleware(enforceSSL()))
-      .use(provider<Database>((_) => db));
+      .use(provider<Database>((_) => db))
+      .use(provider((_) => JwtHandler(userRepository: db.users)));
 }

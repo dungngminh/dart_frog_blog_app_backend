@@ -27,5 +27,5 @@ Future<Response> _onFollowersByIdGetRequest(
       )
       .then((result) => result.map(GetUserFollowerResponse.fromView))
       .then<Response>((res) => OkResponse(res.map((e) => e.toJson()).toList()))
-      .onError((e, s) => ServerErrorResponse(e.toString()));
+      .onError((e, _) => ServerErrorResponse(e.toString()));
 }

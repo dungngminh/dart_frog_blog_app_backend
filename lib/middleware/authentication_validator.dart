@@ -8,12 +8,12 @@ Middleware authenticationValidator({
   List<HttpMethod> expectMethods = const [],
 }) =>
     bearerAuthentication<UserView>(
-      authenticator: (context, token) async {
+      authenticator: (context, token) {
         final db = context.read<Database>();
         final jwt = JWT.verify(token, SecretKey('secret passphrase'));
         final payload = jwt.payload as String;
         return db.users.queryUser(payload);
       },
-      applies: (context) async =>
-          !expectMethods.contains(context.request.method),
+      applies: (context) =>
+          Future.value(!expectMethods.contains(context.request.method)),
     );
