@@ -2,12 +2,12 @@
 import 'package:dart_frog/dart_frog.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:stormberry/stormberry.dart';
+import 'package:very_good_blog_app_backend/common/extensions/json_ext.dart';
 import 'package:very_good_blog_app_backend/dtos/request/users/edit_user_profile_request.dart';
 import 'package:very_good_blog_app_backend/dtos/response/base_response_data.dart';
 import 'package:very_good_blog_app_backend/dtos/response/users/profiles/get_user_profile_response.dart';
 import 'package:very_good_blog_app_backend/models/following_follower.dart';
 import 'package:very_good_blog_app_backend/models/user.dart';
-import 'package:very_good_blog_app_backend/common/extensions/json_ext.dart';
 
 /// @Allow(GET, PATCH)
 Future<Response> onRequest(

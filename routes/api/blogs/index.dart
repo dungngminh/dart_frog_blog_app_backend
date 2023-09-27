@@ -58,25 +58,26 @@ Future<Response> _onBlogsPostRequest(RequestContext context) async {
   final body = await context.request.body();
 
   if (body.isEmpty) return BadRequestResponse();
-  final request = CreateBlogRequest.fromJson(body.asJson());
+  try {
+    final request = CreateBlogRequest.fromJson(body.asJson());
 
-  return db.blogs
-      .insertOne(
-        BlogInsertRequest(
-          id: const Uuid().v4(),
-          title: request.title,
-          category: request.category,
-          content: request.content,
-          imageUrl: request.imageUrl,
-          createdAt: DateTime.now(),
-          creatorId: user.id,
-          updatedAt: DateTime.now(),
-          isDeleted: false,
-        ),
-      )
-      .then<Response>((_) => CreatedResponse('New blog is created'))
-      .onError<CheckedFromJsonException>(
-        (e, _) => BadRequestResponse(e.message),
-      )
-      .onError((e, _) => ServerErrorResponse(e.toString()));
+    await db.blogs.insertOne(
+      BlogInsertRequest(
+        id: const Uuid().v4(),
+        title: request.title,
+        category: request.category,
+        content: request.content,
+        imageUrl: request.imageUrl,
+        createdAt: DateTime.now(),
+        creatorId: user.id,
+        updatedAt: DateTime.now(),
+        isDeleted: false,
+      ),
+    );
+    return CreatedResponse('New blog is created');
+  } on CheckedFromJsonException catch (e) {
+    return BadRequestResponse(e.message);
+  } catch (e) {
+    return ServerErrorResponse(e.toString());
+  }
 }
