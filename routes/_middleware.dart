@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:cloudinary/cloudinary.dart';
 import 'package:dart_frog/dart_frog.dart';
 import 'package:stormberry/stormberry.dart';
-import 'package:test/test.dart';
 import 'package:very_good_blog_app_backend/models/user.dart';
 import 'package:very_good_blog_app_backend/util/jwt_handler.dart';
 
@@ -19,7 +18,7 @@ final db = Database(
 final cloudinary = Cloudinary.signedConfig(
   apiKey: Platform.environment['CLOUDINARY_APIKEY'] ?? '',
   apiSecret: Platform.environment['CLOUDINARY_APISECRET'] ?? '',
-  cloudName: Platform.environment['CLOUDNAME'] ?? '',
+  cloudName: Platform.environment['CLOUDINARY_CLOUDNAME'] ?? '',
 );
 
 Handler middleware(Handler handler) {

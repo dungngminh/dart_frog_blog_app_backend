@@ -25,8 +25,8 @@
       "description": "Local server"
     },
     {
-      "url": "https://very-good-blog-app.up.railway.app",
-      "description": "Production server"
+      "url": "https://very-good-blog-app.up.railway.app/",
+      "description": "Railway server"
     }
   ],
   "tags": [
@@ -57,6 +57,14 @@
     {
       "name": "profiles",
       "description": "Operations about profiles"
+    },
+    {
+      "name": "upload",
+      "description": "Operations about upload"
+    },
+    {
+      "name": "unregister",
+      "description": "Operations about unregister"
     }
   ],
   "components": {
@@ -112,7 +120,9 @@
   "paths": {
     "/api/blogs": {
       "get": {
-        "tags": ["blogs"],
+        "tags": [
+          "blogs"
+        ],
         "responses": {
           "200": {
             "description": "A list of blogs.",
@@ -154,7 +164,9 @@
         "security": []
       },
       "post": {
-        "tags": ["blogs"],
+        "tags": [
+          "blogs"
+        ],
         "requestBody": {
           "description": "",
           "required": false,
@@ -200,7 +212,9 @@
     },
     "/api/blogs/{id}": {
       "get": {
-        "tags": ["blogs"],
+        "tags": [
+          "blogs"
+        ],
         "responses": {
           "200": {
             "description": "A blogs.",
@@ -229,7 +243,9 @@
         "security": []
       },
       "delete": {
-        "tags": ["blogs"],
+        "tags": [
+          "blogs"
+        ],
         "responses": {
           "204": {
             "description": "Deleted",
@@ -252,7 +268,9 @@
         "security": []
       },
       "patch": {
-        "tags": ["blogs"],
+        "tags": [
+          "blogs"
+        ],
         "requestBody": {
           "description": "",
           "required": false,
@@ -294,7 +312,9 @@
     },
     "/api/followings": {
       "post": {
-        "tags": ["followings"],
+        "tags": [
+          "followings"
+        ],
         "requestBody": {
           "description": "",
           "required": false,
@@ -319,7 +339,9 @@
     },
     "/api/auth/register": {
       "post": {
-        "tags": ["register"],
+        "tags": [
+          "register"
+        ],
         "requestBody": {
           "description": "",
           "required": false,
@@ -344,7 +366,9 @@
     },
     "/api/auth/login": {
       "post": {
-        "tags": ["login"],
+        "tags": [
+          "login"
+        ],
         "requestBody": {
           "description": "",
           "required": false,
@@ -369,7 +393,9 @@
     },
     "/api/favorites": {
       "get": {
-        "tags": ["favorites"],
+        "tags": [
+          "favorites"
+        ],
         "responses": {
           "200": {
             "description": "A list of favorites.",
@@ -390,7 +416,9 @@
         "security": []
       },
       "post": {
-        "tags": ["favorites"],
+        "tags": [
+          "favorites"
+        ],
         "requestBody": {
           "description": "",
           "required": false,
@@ -415,7 +443,9 @@
     },
     "/api/users/{id}/blogs": {
       "get": {
-        "tags": ["blogs"],
+        "tags": [
+          "blogs"
+        ],
         "responses": {
           "200": {
             "description": "A list of blogs.",
@@ -449,7 +479,9 @@
     },
     "/api/users/{id}/followers": {
       "get": {
-        "tags": ["followers"],
+        "tags": [
+          "followers"
+        ],
         "responses": {
           "200": {
             "description": "A list of followers.",
@@ -483,7 +515,9 @@
     },
     "/api/users/{id}/followings": {
       "get": {
-        "tags": ["followings"],
+        "tags": [
+          "followings"
+        ],
         "responses": {
           "200": {
             "description": "A list of followings.",
@@ -517,7 +551,9 @@
     },
     "/api/users/{id}/profiles": {
       "get": {
-        "tags": ["profiles"],
+        "tags": [
+          "profiles"
+        ],
         "responses": {
           "200": {
             "description": "A list of profiles.",
@@ -549,7 +585,9 @@
         "security": []
       },
       "patch": {
-        "tags": ["profiles"],
+        "tags": [
+          "profiles"
+        ],
         "requestBody": {
           "description": "",
           "required": false,
@@ -586,6 +624,355 @@
             }
           }
         ],
+        "security": []
+      }
+    },
+    "/api/documents/upload": {
+      "post": {
+        "tags": [
+          "upload"
+        ],
+        "requestBody": {
+          "description": "",
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created upload.",
+            "headers": {},
+            "content": {}
+          }
+        },
+        "parameters": [],
+        "security": []
+      }
+    },
+    "/api/notifications/registrations/register": {
+      "get": {
+        "tags": [
+          "register"
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of register.",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/register"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [],
+        "security": []
+      },
+      "post": {
+        "tags": [
+          "register"
+        ],
+        "requestBody": {
+          "description": "",
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/register"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created register.",
+            "headers": {},
+            "content": {}
+          }
+        },
+        "parameters": [],
+        "security": []
+      },
+      "put": {
+        "tags": [
+          "register"
+        ],
+        "requestBody": {
+          "description": "",
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/register"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "A list of register.",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/register"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [],
+        "security": []
+      },
+      "delete": {
+        "tags": [
+          "register"
+        ],
+        "responses": {
+          "204": {
+            "description": "Deleted",
+            "headers": {},
+            "content": {}
+          }
+        },
+        "parameters": [],
+        "security": []
+      },
+      "patch": {
+        "tags": [
+          "register"
+        ],
+        "requestBody": {
+          "description": "",
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/register"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "A list of register.",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/register"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [],
+        "security": []
+      },
+      "head": {
+        "tags": [
+          "register"
+        ],
+        "responses": {
+          "200": {
+            "description": "Meta informations about register.",
+            "headers": {},
+            "content": {}
+          }
+        },
+        "parameters": [],
+        "security": []
+      },
+      "options": {
+        "tags": [
+          "register"
+        ],
+        "responses": {
+          "204": {
+            "description": "Allowed HTTP methods for /api/notifications/registrations/register",
+            "headers": {
+              "Allow": {
+                "description": "Allowed HTTP methods for /api/notifications/registrations/register",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {}
+          }
+        },
+        "parameters": [],
+        "security": []
+      }
+    },
+    "/api/notifications/registrations/unregister": {
+      "get": {
+        "tags": [
+          "unregister"
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of unregister.",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [],
+        "security": []
+      },
+      "post": {
+        "tags": [
+          "unregister"
+        ],
+        "requestBody": {
+          "description": "",
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created unregister.",
+            "headers": {},
+            "content": {}
+          }
+        },
+        "parameters": [],
+        "security": []
+      },
+      "put": {
+        "tags": [
+          "unregister"
+        ],
+        "requestBody": {
+          "description": "",
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "A list of unregister.",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [],
+        "security": []
+      },
+      "delete": {
+        "tags": [
+          "unregister"
+        ],
+        "responses": {
+          "204": {
+            "description": "Deleted",
+            "headers": {},
+            "content": {}
+          }
+        },
+        "parameters": [],
+        "security": []
+      },
+      "patch": {
+        "tags": [
+          "unregister"
+        ],
+        "requestBody": {
+          "description": "",
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "A list of unregister.",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [],
+        "security": []
+      },
+      "head": {
+        "tags": [
+          "unregister"
+        ],
+        "responses": {
+          "200": {
+            "description": "Meta informations about unregister.",
+            "headers": {},
+            "content": {}
+          }
+        },
+        "parameters": [],
+        "security": []
+      },
+      "options": {
+        "tags": [
+          "unregister"
+        ],
+        "responses": {
+          "204": {
+            "description": "Allowed HTTP methods for /api/notifications/registrations/unregister",
+            "headers": {
+              "Allow": {
+                "description": "Allowed HTTP methods for /api/notifications/registrations/unregister",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {}
+          }
+        },
+        "parameters": [],
         "security": []
       }
     }
