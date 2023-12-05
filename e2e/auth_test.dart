@@ -91,7 +91,7 @@ void main() {
       );
 
       final loginResponse =
-          LoginResponse.fromJson(baseResponse.data as Map<String, dynamic>);
+          LoginResponse.fromJson(baseResponse.result as Map<String, dynamic>);
 
       expect(response.statusCode, HttpStatus.ok);
       expect(
