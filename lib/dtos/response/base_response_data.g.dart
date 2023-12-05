@@ -13,7 +13,7 @@ BaseResponseData _$BaseResponseDataFromJson(Map<String, dynamic> json) =>
       ($checkedConvert) {
         final val = BaseResponseData(
           success: $checkedConvert('success', (v) => v as bool),
-          data: $checkedConvert('data', (v) => v),
+          result: $checkedConvert('result', (v) => v),
           message: $checkedConvert(
               'message', (v) => v as String? ?? kSuccessResponseMessage),
         );
@@ -33,6 +33,6 @@ Map<String, dynamic> _$BaseResponseDataToJson(BaseResponseData instance) {
     }
   }
 
-  writeNotNull('data', instance.data);
+  writeNotNull('result', instance.result);
   return val;
 }

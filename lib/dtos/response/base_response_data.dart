@@ -13,17 +13,17 @@ part 'base_response_data.g.dart';
 class BaseResponseData {
   const BaseResponseData({
     required this.success,
-    this.data,
+    this.result,
     this.message = kSuccessResponseMessage,
   });
 
   factory BaseResponseData.fromJson(Map<String, dynamic> json) =>
       _$BaseResponseDataFromJson(json);
 
-  factory BaseResponseData.data(dynamic data) {
+  factory BaseResponseData.data(dynamic result) {
     return BaseResponseData(
       success: true,
-      data: data,
+      result: result,
     );
   }
 
@@ -43,7 +43,7 @@ class BaseResponseData {
 
   final bool success;
   final String message;
-  final dynamic data;
+  final dynamic result;
 
   Map<String, dynamic> toJson() => _$BaseResponseDataToJson(this);
 
@@ -55,7 +55,7 @@ class BaseResponseData {
     return BaseResponseData(
       success: success ?? this.success,
       message: message ?? this.message,
-      data: data ?? this.data,
+      result: data ?? result,
     );
   }
 }

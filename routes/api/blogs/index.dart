@@ -4,7 +4,6 @@ import 'package:stormberry/stormberry.dart';
 import 'package:uuid/uuid.dart';
 import 'package:very_good_blog_app_backend/common/extensions/json_ext.dart';
 import 'package:very_good_blog_app_backend/dtos/request/blogs/create_blog_request.dart';
-import 'package:very_good_blog_app_backend/dtos/response/base_pagination_response.dart';
 import 'package:very_good_blog_app_backend/dtos/response/base_response_data.dart';
 import 'package:very_good_blog_app_backend/dtos/response/blogs/get_blog_response.dart';
 import 'package:very_good_blog_app_backend/models/blog.dart';
@@ -26,26 +25,21 @@ Future<Response> _onBlogsGetRequest(RequestContext context) async {
   final queryParams = context.request.uri.queryParameters;
   final limit = int.tryParse(queryParams['limit'] ?? '') ?? 20;
   final currentPage = int.tryParse(queryParams['page'] ?? '') ?? 1;
+  final searchValue = queryParams['search'];
+
+  // fuzzy search
+  
 
   try {
     final results = await db.blogs.queryBlogs(
       QueryParams(
         limit: limit,
         offset: (currentPage - 1) * limit,
-      ),
+        where: 
+      ,),
     );
     final blogs = results.map(GetBlogResponse.fromView);
-    final pagination = BasePaginationResponse(
-      currentPage: currentPage,
-      limit: limit,
-      totalCount: blogs.length,
-    );
-    return OkResponse(
-      {
-        'blogs': blogs.map((e) => e.toJson()).toList(),
-        'pagination': pagination.toJson(),
-      },
-    );
+    return OkResponse(blogs.map((e) => e.toJson()).toList());
   } catch (e) {
     return ServerErrorResponse(e.toString());
   }
