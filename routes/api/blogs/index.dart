@@ -1,4 +1,5 @@
 import 'package:dart_frog/dart_frog.dart';
+import 'package:dartx/dartx.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:stormberry/stormberry.dart';
 import 'package:uuid/uuid.dart';
@@ -12,6 +13,7 @@ import 'package:very_good_blog_app_backend/models/user.dart';
 /// @Allow(GET, POST)
 /// @Query(limit)
 /// @Query(page)
+/// @Query(search)
 Future<Response> onRequest(RequestContext context) {
   return switch (context.request.method) {
     HttpMethod.get => _onBlogsGetRequest(context),
@@ -23,20 +25,15 @@ Future<Response> onRequest(RequestContext context) {
 Future<Response> _onBlogsGetRequest(RequestContext context) async {
   final db = context.read<Database>();
   final queryParams = context.request.uri.queryParameters;
-  final limit = int.tryParse(queryParams['limit'] ?? '') ?? 20;
-  final currentPage = int.tryParse(queryParams['page'] ?? '') ?? 1;
-  final searchValue = queryParams['search'];
-
-  // fuzzy search
-  
+  final limit = int.tryParse(queryParams['limit'].orEmpty()) ?? 20;
+  final currentPage = int.tryParse(queryParams['page'].orEmpty()) ?? 1;
 
   try {
     final results = await db.blogs.queryBlogs(
       QueryParams(
         limit: limit,
         offset: (currentPage - 1) * limit,
-        where: 
-      ,),
+      ),
     );
     final blogs = results.map(GetBlogResponse.fromView);
     return OkResponse(blogs.map((e) => e.toJson()).toList());

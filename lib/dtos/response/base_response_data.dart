@@ -34,10 +34,11 @@ class BaseResponseData {
     );
   }
 
-  factory BaseResponseData.failed([String? message]) {
+  factory BaseResponseData.failed([String? message, dynamic stackTrace]) {
     return BaseResponseData(
       success: false,
       message: message ?? kFailedResponseMessage,
+      result: stackTrace,
     );
   }
 
@@ -119,10 +120,10 @@ class ForbiddenResponse extends Response {
 }
 
 class ServerErrorResponse extends Response {
-  ServerErrorResponse([String? message])
+  ServerErrorResponse([String? message, dynamic stackTrace])
       : super.json(
           statusCode: HttpStatus.internalServerError,
-          body: BaseResponseData.failed(message).toJson(),
+          body: BaseResponseData.failed(message, stackTrace).toJson(),
         );
 }
 

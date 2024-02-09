@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:dart_frog/dart_frog.dart';
 import 'package:stormberry/stormberry.dart';
-import 'package:string_validator/string_validator.dart';
+import 'package:very_good_blog_app_backend/common/error_message_code.dart';
 import 'package:very_good_blog_app_backend/common/extensions/hash_extension.dart';
 import 'package:very_good_blog_app_backend/common/extensions/json_ext.dart';
 import 'package:very_good_blog_app_backend/dtos/request/auth/login_request.dart';
@@ -27,10 +27,6 @@ Future<Response> _onLoginPostRequest(RequestContext context) async {
   if (body.isEmpty) return BadRequestResponse();
   final request = LoginRequest.fromJson(body.asJson());
 
-  if (!isEmail(request.email)) {
-    return BadRequestResponse('Email format is wrong, please check again');
-  }
-
   return db.users
       .queryUsers(
     QueryParams(
@@ -41,9 +37,9 @@ Future<Response> _onLoginPostRequest(RequestContext context) async {
       .then<Response>((users) {
     final user = users.firstOrNull;
     return user == null
-        ? BadRequestResponse('User is not registered')
+        ? BadRequestResponse(ErrorMessageCode.notRegisterYet)
         : OkResponse(
             LoginResponse(id: user.id, token: createJwt(user.id)).toJson(),
           );
-  }).onError((e, _) => ServerErrorResponse(e.toString()));
+  }).onError((e, _) => ServerErrorResponse(ErrorMessageCode.unknownError));
 }

@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:dart_frog/dart_frog.dart';
 import 'package:stormberry/stormberry.dart';
-import 'package:string_validator/string_validator.dart';
 import 'package:uuid/uuid.dart';
+import 'package:very_good_blog_app_backend/common/error_message_code.dart';
 import 'package:very_good_blog_app_backend/common/extensions/hash_extension.dart';
 import 'package:very_good_blog_app_backend/common/extensions/json_ext.dart';
 import 'package:very_good_blog_app_backend/dtos/request/auth/register_request.dart';
@@ -23,17 +23,9 @@ Future<Response> _onRegisterPostRequest(RequestContext context) async {
 
   final body = await context.request.body();
 
-  if (body.isEmpty) return BadRequestResponse();
+  if (body.isEmpty) return BadRequestResponse(ErrorMessageCode.bodyEmpty);
 
   final request = RegisterRequest.fromJson(body.asJson());
-
-  if (request.password != request.confirmationPassword) {
-    return BadRequestResponse('Confirmation password not match');
-  }
-
-  if (!isEmail(request.email)) {
-    return BadRequestResponse('Email format is wrong, please check again');
-  }
 
   final users = await db.users.queryUsers(
     QueryParams(
@@ -44,20 +36,22 @@ Future<Response> _onRegisterPostRequest(RequestContext context) async {
     ),
   );
   if (users.isNotEmpty) {
-    return ConflictResponse('This email was registered');
+    return ConflictResponse(ErrorMessageCode.emailRegisterd);
   }
 
-    return db.users
-        .insertOne(
-          UserInsertRequest(
-            email: request.email,
-            follower: 0,
-            following: 0,
-            fullName: request.fullName,
-            id: const Uuid().v4(),
-            password: request.password.hashValue,
-          ),
-        )
+  return db.users
+      .insertOne(
+        UserInsertRequest(
+          email: request.email,
+          follower: 0,
+          following: 0,
+          fullName: request.fullName,
+          id: const Uuid().v4(),
+          password: request.password.hashValue,
+        ),
+      )
       .then<Response>((_) => CreatedResponse())
-      .onError((e, _) => ServerErrorResponse(e.toString()));
+      .onError(
+        (e, st) => ServerErrorResponse(ErrorMessageCode.unknownError, st),
+      );
 }
