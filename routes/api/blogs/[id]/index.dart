@@ -1,6 +1,7 @@
 import 'package:dart_frog/dart_frog.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:stormberry/stormberry.dart';
+import 'package:very_good_blog_app_backend/common/error_message_code.dart';
 import 'package:very_good_blog_app_backend/common/extensions/header_extesion.dart';
 import 'package:very_good_blog_app_backend/common/extensions/json_ext.dart';
 import 'package:very_good_blog_app_backend/dtos/request/blogs/edit_blog_request.dart';
@@ -61,7 +62,7 @@ Future<Response> _onBlogsPatchRequest(RequestContext context, String id) async {
   final user = context.read<UserView>();
   try {
     final body = await context.request.body();
-    if (body.isEmpty) return BadRequestResponse();
+    if (body.isEmpty) return BadRequestResponse(ErrorMessageCode.bodyEmpty);
     final request = EditBlogRequest.fromJson(body.asJson());
     final blog = await db.blogs.queryBlog(id);
     if (blog == null) return NotFoundResponse('Blog not found');

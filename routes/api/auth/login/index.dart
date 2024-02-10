@@ -24,7 +24,7 @@ Future<Response> _onLoginPostRequest(RequestContext context) async {
 
   final body = await context.request.body();
 
-  if (body.isEmpty) return BadRequestResponse();
+  if (body.isEmpty) return BadRequestResponse(ErrorMessageCode.bodyEmpty);
   final request = LoginRequest.fromJson(body.asJson());
 
   return db.users

@@ -11,4 +11,8 @@ class ErrorMessageCode {
 
   // Register
   static const emailRegisterd = 'email-registerd';
+
+
+  // Blog
+  static const blocNotFound = 'blog-not-found';
 }
