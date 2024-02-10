@@ -53,7 +53,7 @@ Future<Response> _onBlogsGetRequest(RequestContext context, String id) async {
           .toJson(),
     );
   } catch (e) {
-    return ServerErrorResponse(e.toString());
+    return InternalServerErrorResponse(e.toString());
   }
 }
 
@@ -83,7 +83,7 @@ Future<Response> _onBlogsPatchRequest(RequestContext context, String id) async {
   } on CheckedFromJsonException catch (e) {
     return BadRequestResponse(e.message);
   } catch (e) {
-    return ServerErrorResponse(e.toString());
+    return InternalServerErrorResponse(e.toString());
   }
 }
 
@@ -102,6 +102,6 @@ Future<Response> _onBlogsDeleteRequest(
     await db.blogs.deleteOne(id);
     return OkResponse();
   } catch (e) {
-    return ServerErrorResponse(e.toString());
+    return InternalServerErrorResponse(e.toString());
   }
 }

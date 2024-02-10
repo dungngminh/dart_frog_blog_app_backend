@@ -52,6 +52,6 @@ Future<Response> _onRegisterPostRequest(RequestContext context) async {
       )
       .then<Response>((_) => CreatedResponse())
       .onError(
-        (e, st) => ServerErrorResponse(ErrorMessageCode.unknownError, st),
+        (e, st) => InternalServerErrorResponse(ErrorMessageCode.unknownError),
       );
 }

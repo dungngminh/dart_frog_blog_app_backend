@@ -45,7 +45,7 @@ Future<Response> _onUserByIdGetRequest(
                 ).toJson(),
               ),
       )
-      .catchError((_) => ServerErrorResponse());
+      .catchError((_) => InternalServerErrorResponse());
 }
 
 Future<Response> _onUserByIdPatchRequest(
@@ -73,7 +73,7 @@ Future<Response> _onUserByIdPatchRequest(
           ),
         )
         .then<Response>((_) => OkResponse())
-        .onError((e, _) => ServerErrorResponse(e.toString()));
+        .onError((e, _) => InternalServerErrorResponse(e.toString()));
   } on CheckedFromJsonException catch (e) {
     return BadRequestResponse(e.message);
   }

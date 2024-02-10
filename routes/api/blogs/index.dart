@@ -38,7 +38,7 @@ Future<Response> _onBlogsGetRequest(RequestContext context) async {
     final blogs = results.map(GetBlogResponse.fromView);
     return OkResponse(blogs.map((e) => e.toJson()).toList());
   } catch (e) {
-    return ServerErrorResponse(e.toString());
+    return InternalServerErrorResponse(e.toString());
   }
 }
 
@@ -69,6 +69,6 @@ Future<Response> _onBlogsPostRequest(RequestContext context) async {
   } on CheckedFromJsonException catch (e) {
     return BadRequestResponse(e.message);
   } catch (e) {
-    return ServerErrorResponse(e.toString());
+    return InternalServerErrorResponse(e.toString());
   }
 }

@@ -14,6 +14,7 @@ class BaseResponseData {
   const BaseResponseData({
     required this.success,
     this.result,
+    this.errorCode,
     this.message = kSuccessResponseMessage,
   });
 
@@ -34,15 +35,16 @@ class BaseResponseData {
     );
   }
 
-  factory BaseResponseData.failed([String? message, dynamic stackTrace]) {
+  factory BaseResponseData.failed({String? errorCode, String? message}) {
     return BaseResponseData(
       success: false,
+      errorCode: errorCode,
       message: message ?? kFailedResponseMessage,
-      result: stackTrace,
     );
   }
 
   final bool success;
+  final String? errorCode;
   final String message;
   final dynamic result;
 
@@ -50,13 +52,15 @@ class BaseResponseData {
 
   BaseResponseData copyWith({
     bool? success,
+    String? errorCode,
     String? message,
-    dynamic data,
+    dynamic result,
   }) {
     return BaseResponseData(
       success: success ?? this.success,
+      errorCode: errorCode ?? this.errorCode,
       message: message ?? this.message,
-      result: data ?? result,
+      result: result ?? this.result,
     );
   }
 }
@@ -80,50 +84,56 @@ class CreatedResponse extends Response {
 }
 
 class NotFoundResponse extends Response {
-  NotFoundResponse([String? message])
+  NotFoundResponse([String? errorCode, String? message])
       : super.json(
           statusCode: HttpStatus.notFound,
-          body: BaseResponseData.failed(message).toJson(),
+          body: BaseResponseData.failed(errorCode: errorCode, message: message)
+              .toJson(),
         );
 }
 
 class ConflictResponse extends Response {
-  ConflictResponse([String? message])
+  ConflictResponse([String? errorCode, String? message])
       : super.json(
           statusCode: HttpStatus.conflict,
-          body: BaseResponseData.failed(message).toJson(),
+          body: BaseResponseData.failed(errorCode: errorCode, message: message)
+              .toJson(),
         );
 }
 
 class UnauthorizedResponse extends Response {
-  UnauthorizedResponse([String? message])
+  UnauthorizedResponse([String? errorCode, String? message])
       : super.json(
           statusCode: HttpStatus.unauthorized,
-          body: BaseResponseData.failed(message).toJson(),
+          body: BaseResponseData.failed(errorCode: errorCode, message: message)
+              .toJson(),
         );
 }
 
 class BadRequestResponse extends Response {
-  BadRequestResponse([String? message])
+  BadRequestResponse([String? errorCode, String? message])
       : super.json(
           statusCode: HttpStatus.badRequest,
-          body: BaseResponseData.failed(message).toJson(),
+          body: BaseResponseData.failed(errorCode: errorCode, message: message)
+              .toJson(),
         );
 }
 
 class ForbiddenResponse extends Response {
-  ForbiddenResponse([String? message])
+  ForbiddenResponse([String? errorCode, String? message])
       : super.json(
           statusCode: HttpStatus.forbidden,
-          body: BaseResponseData.failed(message).toJson(),
+          body: BaseResponseData.failed(errorCode: errorCode, message: message)
+              .toJson(),
         );
 }
 
-class ServerErrorResponse extends Response {
-  ServerErrorResponse([String? message, dynamic stackTrace])
+class InternalServerErrorResponse extends Response {
+  InternalServerErrorResponse([String? errorCode, String? message])
       : super.json(
           statusCode: HttpStatus.internalServerError,
-          body: BaseResponseData.failed(message, stackTrace).toJson(),
+          body: BaseResponseData.failed(errorCode: errorCode, message: message)
+              .toJson(),
         );
 }
 

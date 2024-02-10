@@ -41,5 +41,6 @@ Future<Response> _onLoginPostRequest(RequestContext context) async {
         : OkResponse(
             LoginResponse(id: user.id, token: createJwt(user.id)).toJson(),
           );
-  }).onError((e, _) => ServerErrorResponse(ErrorMessageCode.unknownError));
+  }).onError(
+          (e, _) => InternalServerErrorResponse(ErrorMessageCode.unknownError));
 }
